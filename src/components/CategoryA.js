@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
   whole: {
     flex: 1,
     padding: 8,
-    backgroundColor: 'white',
+    // backgroundColor: 'white',
     overflow: 'hidden',
   },
   container: {
