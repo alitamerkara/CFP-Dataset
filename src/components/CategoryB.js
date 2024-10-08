@@ -48,7 +48,7 @@ const birim = [
 ];
 
 
-const CategoryA = () => {
+const CategoryB = () => {
   const [month, setMonth] = useState(null);
   const [source, setSource] = useState(null);
   const [id, setId] = useState(null);
@@ -113,7 +113,7 @@ const CategoryA = () => {
           style={styles.dropdown}
           placeholder="Ekipman ID"
           value={id}
-          onChangeText={(text) => seStId(text)}
+          onChangeText={(text) => setId(text)}
           type="number"
         />
       </View>
@@ -181,46 +181,37 @@ const CategoryA = () => {
       </View>
      
       <View style={styles.container}>
-        <PrimaryButton children={"Başla"} onPress={() => alert('Saved!')}/>
+        <PrimaryButton children={"Kaydet"} onPress={() => alert('Bilgileriniz Kaydedildi!')}/>
       </View>
     </View>
   );
 };
 
-export default CategoryA;
+export default CategoryB;
 
 const styles = StyleSheet.create({
   whole: {
     flex: 1,
     padding: 8,
-    backgroundColor: 'white',
+    backgroundColor: '#FFFFE0',
     overflow: 'hidden',
   },
   container: {
-    backgroundColor: 'white',
+    backgroundColor: '#FFFFE0',
     padding: 16,
   },
   dropdown: {
     height: 50,
-    borderColor: 'gray',
+    borderColor: '#64d185',
+    backgroundColor:"#FFFFE0",
+    color:'green',
     borderWidth: 0.5,
     borderRadius: 8,
     paddingHorizontal: 8,
   },
-  icon: {
-    marginRight: 5,
-  },
-  label: {
-    position: 'absolute',
-    backgroundColor: 'white',
-    left: 22,
-    top: 8,
-    zIndex: 999,
-    paddingHorizontal: 8,
-    fontSize: 14,
-  },
   placeholderStyle: {
     fontSize: 16,
+    color:'green'
   },
   selectedTextStyle: {
     fontSize: 16,

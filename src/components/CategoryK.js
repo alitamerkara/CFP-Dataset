@@ -3,34 +3,12 @@ import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-nativ
 import { Dropdown } from 'react-native-element-dropdown';
 import PrimaryButton from './PrimaryButton';
 
-const ay = [
-  { label: 'Ocak', value: '1' },
-  { label: 'Şubat', value: '2' },
-  { label: 'Mart', value: '3' },
-  { label: 'Nisan', value: '4' },
-  { label: 'Mayıs', value: '5' },
-  { label: 'Haziran', value: '6' },
-  { label: 'Temmuz', value: '7' },
-  { label: 'Ağustos', value: '8' },
-  { label: 'Eylül', value: '9' },
-  { label: 'Ekim', value: '10' },
-  { label: 'Kasım', value: '11' },
-  { label: 'Aralık', value: '12' }, 
-];
-const yakıt = [
-  { label: 'Doğal Gaz', value: '1' },
-  { label: 'Dizel', value: '2' },
-  { label: 'LPG', value: '3' },
-  { label: 'Asetilen', value: '4' }, 
-  { label: 'Benzin', value: '5' }, 
-  { label: 'LNG', value: '6' }, 
-  { label: 'CNG', value: '7' }, 
-];
-const kaynak = [
-  { label: 'On Road (Kamyon, otobüs, araba vb.)', value: '1' },
-  { label: 'Off Road (Forklift, kepçe, dozer vb.)', value: '2' },
-  { label: 'Off Road İki Zamanlı (Ot biçme makinesi vb.)', value: '3' },
-  { label: 'Off Road Dört Zamanlı (Çim biçme makinesi vb.)', value: '4' }, 
+const malzeme = [
+  { label: 'Elektrik', value: '1' },
+  { label: 'Kırtasiye', value: '2' },
+  { label: 'Donanım', value: '3' },
+  { label: 'Yazılım', value: '4' },
+  { label: 'Bilgi İşlem Sarf', value: '5' },
 ];
 const birim = [
   { label: 'Ton', value: '1' },
@@ -41,14 +19,12 @@ const birim = [
 ];
 
 
-const CategoryC = () => {
-  const [month, setMonth] = useState(null);
-  const [source, setSource] = useState(null);
+const CategoryK = () => {
+  const [goods, setGoods] = useState(null);
   const [id, setId] = useState(null);
-  const [fuel, setFuel] = useState(null);
-  const [amount, setAmount] = useState(null);
   const [unit, setUnit] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
+  const [electric, setElectric] = useState(null);
 
 
   return (
@@ -60,64 +36,18 @@ const CategoryC = () => {
           selectedTextStyle={styles.selectedTextStyle}
           inputSearchStyle={styles.inputSearchStyle}
           iconStyle={styles.iconStyle}
-          data={ay}
+          data={malzeme}
           search
           maxHeight={300}
           labelField="label"
           valueField="value"
-          placeholder='Ay Seçin'
+          placeholder='Malzeme Grupları'
           searchPlaceholder="Search..."
-          value={month}
+          value={goods}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
-            setMonth(item.value);
-            setIsFocus(false);
-          }}
-        />
-      </View>
-      <View style={styles.container}>
-        <Dropdown
-          style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
-          iconStyle={styles.iconStyle}
-          data={yakıt}
-          search
-          maxHeight={300}
-          labelField="label"
-          valueField="value"
-          placeholder='Yakıt Seçin'
-          searchPlaceholder="Search..."
-          value={fuel}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
-          onChange={item => {
-            setFuel(item.value);
-            setIsFocus(false);
-          }}
-        />
-      </View>
-      <View style={styles.container}>
-        <Dropdown
-          style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
-          iconStyle={styles.iconStyle}
-          data={kaynak}
-          search
-          maxHeight={300}
-          labelField="label"
-          valueField="value"
-          placeholder='Emisyon Kaynağı Seçin'
-          searchPlaceholder="Search..."
-          value={source}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
-          onChange={item => {
-            setSource(item.value);
+            setGoods(item.value);
             setIsFocus(false);
           }}
         />
@@ -125,18 +55,26 @@ const CategoryC = () => {
       <View style={styles.container}>
         <TextInput
           style={styles.dropdown}
-          placeholder="Araç ID"
-          value={id}
-          onChangeText={(text) => setId(text)}
-          type="number"
+          placeholder="Elektrik Satın Alımı"
+          value={electric}
+          onChangeText={(text) => setElectric(text)}
+          
         />
       </View>
       <View style={styles.container}>
         <TextInput
           style={styles.dropdown} // Apply the dropdown style to the TextInput
-          placeholder="Tüketim Miktarı"
-          value={amount}
-          onChangeText={(text) => setAmount(text)}
+          placeholder="Malzeme Grubu için NAICS Kodu"
+          value={id}
+          onChangeText={(text) => setId(text)}
+        />
+      </View>
+      <View style={styles.container}>
+        <TextInput
+          style={styles.dropdown} // Apply the dropdown style to the TextInput
+          placeholder="Malzeme Miktarı"
+          value={id}
+          onChangeText={(text) => setId(text)}
         />
       </View>
       <View style={styles.container}>
@@ -151,7 +89,7 @@ const CategoryC = () => {
           maxHeight={300}
           labelField="label"
           valueField="value"
-          placeholder='Birim Seçin'
+          placeholder='Malzeme Miktar Birimi'
           searchPlaceholder="Search..."
           value={unit}
           onFocus={() => setIsFocus(true)}
@@ -162,15 +100,30 @@ const CategoryC = () => {
           }}
         />
       </View>
-     
       <View style={styles.container}>
-        <PrimaryButton onPress={() => alert('Bilgileriniz Kaydedildi!')}>Kaydet</PrimaryButton>
+        <TextInput
+          style={styles.dropdown}
+          placeholder="Satın Alma Bedeli (USD)"
+          value={id}
+          onChangeText={(text) => setId(text)}
+        />
+      </View>
+      <View style={styles.container}>
+        <TextInput
+          style={styles.dropdown}
+          placeholder="Faaliyet Verisi Değeri"
+          value={id}
+          onChangeText={(text) => setId(text)}
+        />
+      </View>
+      <View style={styles.container}>
+        <PrimaryButton children={"Kaydet"} onPress={() => alert('Bilgileriniz Kaydedildi!')}/>
       </View>
     </View>
   );
 };
 
-export default CategoryC;
+export default CategoryK;
 
 const styles = StyleSheet.create({
   whole: {

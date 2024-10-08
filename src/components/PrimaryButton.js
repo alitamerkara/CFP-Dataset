@@ -11,16 +11,17 @@ const PrimaryButton = ({ children, onPress }) => {
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: '#5CBF7A', // One tone darker
+        backgroundColor: '#5CBF7A',
         paddingVertical: 10,
         paddingHorizontal: 20,
-        borderRadius: 4,
+        borderRadius: 12,
         alignItems: 'center',
         marginVertical: 4,
     },
     buttonText: {
         color: 'white',
         fontSize: 16,
+        fontWeight:"bold",
     },
 });
 

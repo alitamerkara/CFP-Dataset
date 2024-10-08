@@ -17,42 +17,43 @@ const ay = [
   { label: 'Kasım', value: '11' },
   { label: 'Aralık', value: '12' }, 
 ];
-const yakıt = [
-  { label: 'Doğal Gaz', value: '1' },
-  { label: 'Dizel', value: '2' },
-  { label: 'LPG', value: '3' },
-  { label: 'Asetilen', value: '4' }, 
-  { label: 'Benzin', value: '5' }, 
-  { label: 'LNG', value: '6' }, 
-  { label: 'CNG', value: '7' }, 
-];
-const kaynak = [
-  { label: 'On Road (Kamyon, otobüs, araba vb.)', value: '1' },
-  { label: 'Off Road (Forklift, kepçe, dozer vb.)', value: '2' },
-  { label: 'Off Road İki Zamanlı (Ot biçme makinesi vb.)', value: '3' },
-  { label: 'Off Road Dört Zamanlı (Çim biçme makinesi vb.)', value: '4' }, 
-];
-const birim = [
-  { label: 'Ton', value: '1' },
-  { label: 'Lt', value: '2' },
-  { label: 'Sm3', value: '3' },
-  { label: 'M3', value: '4' }, 
-  { label: 'kWh', value: '5' }, 
+const satınAlım = [
+  { label: 'İnşaat Malzemeleri Satın Alımı', value: '1' },
+  { label: 'Hizmet Sözleşmesi (temizlik, güvenlik, taşıma/lojistik vb.)', value: '2' },
+  { label: 'Ofis Malzemeleri ve Ekipmanları Satın Alımı', value: '3' },
+  { label: 'Bilgisayar Yazılım ve Donanımları', value: '4' }, 
+  { label: 'İş Güvenliği ve Koruyucu Ekipmanlar', value: '5' }, 
+  { label: 'Reklam ve Pazarlama Hizmetleri', value: '6' },
+  { label: 'Eğitim ve Gelişim Hizmetleri', value: '7' }, 
+  { label: 'Bakım ve Onarım Hizmetleri', value: '8' },
+  { label: 'Risk Analizi ve Yönetimi Hizmetleri', value: '9' },
+  { label: 'Kalite Kontrol ve Test Hizmetleri', value: '10' },
+  { label: 'Soğutma/Isıtma Sistemleri', value: '11' },
+
 ];
 
 
-const CategoryC = () => {
+const CategoryN = () => {
   const [month, setMonth] = useState(null);
-  const [source, setSource] = useState(null);
-  const [id, setId] = useState(null);
-  const [fuel, setFuel] = useState(null);
   const [amount, setAmount] = useState(null);
-  const [unit, setUnit] = useState(null);
+  const [buying, setBuying] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
+  const [unit, setUnit] = useState(null);
 
 
   return (
     <View style={styles.whole}>
+      <Text style={styles.title}>Satın Alınan Hizmetler Kaynaklı Emisyonlar</Text>
+        <View style={styles.container}>
+        <TextInput
+          style={styles.dropdown}
+          placeholder="Yıl"
+          value={amount}
+          onChangeText={(text) => setAmount(text)}
+          type="number"
+          keyboardType="numeric"
+        />
+      </View>
       <View style={styles.container}>
         <Dropdown
           style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
@@ -83,94 +84,52 @@ const CategoryC = () => {
           selectedTextStyle={styles.selectedTextStyle}
           inputSearchStyle={styles.inputSearchStyle}
           iconStyle={styles.iconStyle}
-          data={yakıt}
+          data={satınAlım}
           search
           maxHeight={300}
           labelField="label"
           valueField="value"
-          placeholder='Yakıt Seçin'
+          placeholder='Satın Alma Kalemi'
           searchPlaceholder="Search..."
-          value={fuel}
+          value={buying}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
-            setFuel(item.value);
+            setBuying(item.value);
             setIsFocus(false);
           }}
         />
       </View>
-      <View style={styles.container}>
-        <Dropdown
-          style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
-          iconStyle={styles.iconStyle}
-          data={kaynak}
-          search
-          maxHeight={300}
-          labelField="label"
-          valueField="value"
-          placeholder='Emisyon Kaynağı Seçin'
-          searchPlaceholder="Search..."
-          value={source}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
-          onChange={item => {
-            setSource(item.value);
-            setIsFocus(false);
-          }}
+      <View style={styles.field}>
+        <Text>Satın Alma Bedeli</Text>
+        <View style={styles.container}>
+        <TextInput
+          style={styles.dropdown}
+          placeholder="Değer"
+          value={amount}
+          onChangeText={(text) => setAmount(text)}
+          type="number"
+          keyboardType="numeric"
         />
-      </View>
+      </View> 
       <View style={styles.container}>
         <TextInput
           style={styles.dropdown}
-          placeholder="Araç ID"
-          value={id}
-          onChangeText={(text) => setId(text)}
+          placeholder="Birim"
+          value={unit}
+          onChangeText={(text) => setUnit(text)}
           type="number"
         />
+      </View> 
       </View>
       <View style={styles.container}>
-        <TextInput
-          style={styles.dropdown} // Apply the dropdown style to the TextInput
-          placeholder="Tüketim Miktarı"
-          value={amount}
-          onChangeText={(text) => setAmount(text)}
-        />
-      </View>
-      <View style={styles.container}>
-        <Dropdown
-          style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
-          iconStyle={styles.iconStyle}
-          data={birim}
-          search
-          maxHeight={300}
-          labelField="label"
-          valueField="value"
-          placeholder='Birim Seçin'
-          searchPlaceholder="Search..."
-          value={unit}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
-          onChange={item => {
-            setUnit(item.value);
-            setIsFocus(false);
-          }}
-        />
-      </View>
-     
-      <View style={styles.container}>
-        <PrimaryButton onPress={() => alert('Bilgileriniz Kaydedildi!')}>Kaydet</PrimaryButton>
+        <PrimaryButton children={"Kaydet"} onPress={() => alert('Bilgileriniz Kaydedildi!!')}/>
       </View>
     </View>
   );
 };
 
-export default CategoryC;
+export default CategoryN;
 
 const styles = StyleSheet.create({
   whole: {
@@ -216,5 +175,19 @@ const styles = StyleSheet.create({
   saveButtonText: {
     color: 'white',
     fontSize: 20,
+  },
+  field: {
+    padding: 8,
+    borderWidth:1,
+    borderColor: '#4CAF50',
+    borderRadius:8,
+    margin:5
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#4CAF50',
+    textAlign: 'center',
+    padding: 8,
   },
 });
