@@ -16,8 +16,16 @@ export default function App() {
       <Drawer.Navigator
         initialRouteName="Home"
         screenOptions={{
-          headerStyle: { backgroundColor: '#fff' },
-          headerTintColor: 'green',
+          headerStyle: { backgroundColor: '#5CBF7A' },
+          headerTintColor: '#FFFFFF',
+          drawerStyle: {
+            backgroundColor: '#64d185',
+          },
+          drawerLabelStyle: {
+            color: '#FFFFFF',
+            fontWeight: 'bold',
+            fontSize: 16,
+          },
         }}
       >
         <Drawer.Screen name="Home" component={HomeScreen} />

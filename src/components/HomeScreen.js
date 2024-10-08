@@ -1,9 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, Button, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import PrimaryButton from './PrimaryButton';
 
 const HomeScreen = () => {
 const navigation = useNavigation();
+const handlePress=()=>{
+    navigation.openDrawer()
+}
     return (
         <ImageBackground 
             source={require("../../assets/bg1.avif") }
@@ -17,11 +21,7 @@ const navigation = useNavigation();
                 />
                 <Text style={styles.title}>CFP Veri Setine Hoşgeldiniz</Text>
                 <Text style={styles.subtitle}>Yan Menüyü Kullanarak veya Butona Basarak Başlayabilirsiniz</Text>
-                <Button 
-                    title="Başla" 
-                    onPress={() => navigation.openDrawer()} 
-                    color="#045909"
-                />
+                <PrimaryButton children={"Başla"} onPress={handlePress}/>
           </View>
         </ImageBackground>
     );
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 32,
         fontWeight: 'bold',
-        color: "#48c24d",
+        color: "green",
         marginBottom: 10,
         textAlign: 'center',
     },

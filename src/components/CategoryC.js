@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
+import PrimaryButton from './PrimaryButton';
 
 const ay = [
   { label: 'Ocak', value: '1' },
@@ -163,9 +164,7 @@ const CategoryA = () => {
       </View>
      
       <View style={styles.container}>
-        <TouchableOpacity style={styles.saveButton} onPress={() => alert('Saved!')}>
-          <Text style={styles.saveButtonText}>Kaydet</Text>
-        </TouchableOpacity>
+        <PrimaryButton onPress={() => alert('Saved!')}>Kaydet</PrimaryButton>
       </View>
     </View>
   );
