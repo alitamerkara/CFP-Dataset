@@ -3,29 +3,7 @@ import { StyleSheet, Text, TextInput, View, ScrollView } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import PrimaryButton from './PrimaryButton';
 
-const ay = [
-  { label: 'Ocak', value: '1' },
-  { label: 'Şubat', value: '2' },
-  { label: 'Mart', value: '3' },
-  { label: 'Nisan', value: '4' },
-  { label: 'Mayıs', value: '5' },
-  { label: 'Haziran', value: '6' },
-  { label: 'Temmuz', value: '7' },
-  { label: 'Ağustos', value: '8' },
-  { label: 'Eylül', value: '9' },
-  { label: 'Ekim', value: '10' },
-  { label: 'Kasım', value: '11' },
-  { label: 'Aralık', value: '12' }, 
-];
-const yakıt = [
-  { label: 'Doğal Gaz', value: '1' },
-  { label: 'Dizel', value: '2' },
-  { label: 'LPG', value: '3' },
-  { label: 'Asetilen', value: '4' }, 
-  { label: 'Benzin', value: '5' }, 
-  { label: 'LNG', value: '6' }, 
-  { label: 'CNG', value: '7' }, 
-];
+
 const sertifika = [
   { label: 'Evet', value: '1' },
   { label: 'Hayır', value: '2' },
@@ -38,14 +16,23 @@ const birim = [
 
 const CategoryD = () => {
   const [country, setCountry] = useState(null);
-  const [certificate, setCertificate] = useState(null);
   const [amount, setAmount] = useState(null);
   const [unit, setUnit] = useState(null);
+  const [certificate, setCertificate] = useState(null);
+  const [secondAmount, setSecondAmount] = useState(null);
+  const [location, setLocation] = useState(null);
+  const [emission, setEmission] = useState(null);
+  const [specification, setSpecification] = useState(null);
+  const [certificateCheck, setCertificateCheck] = useState(null);
+  const [document, setDocument] = useState(null);
+  const [year, setYear] = useState(null);
+  const [cost, setCost] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
 
 
   return (
-    <ScrollView>
+    <ScrollView contentContainerStyle={{flexGrow: 1}}
+    keyboardShouldPersistTaps='handled'>
     <View style={styles.whole}>
       <View style={styles.container}>
         <TextInput
@@ -119,8 +106,10 @@ const CategoryD = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Miktar"
-          value={amount}
-          onChangeText={(text) => setAmount(text)}
+          value={secondAmount}
+          onChangeText={(text) => setSecondAmount(text)}
+          type="number"
+          keyboardType="numeric"
         />
       </View>
       </View>
@@ -128,8 +117,10 @@ const CategoryD = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Konum Temelli Toplam Elektrik Tüketimi"
-          // value={amount}
-          // onChangeText={(text) => setAmount(text)}
+          value={location}
+          onChangeText={(text) => setLocation(text)}
+          type="number"
+          keyboardType="numeric"
         />
       </View>
       {certificate=="Evet"? (<View style={styles.field}>
@@ -138,55 +129,60 @@ const CategoryD = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Emisyon Faktörü?"
-          // value={amount}
-          // onChangeText={(text) => setAmount(text)}
+          value={emission}
+          onChangeText={(text) => setEmission(text)}
         />
         </View>
         <View style={styles.container}>
         <TextInput
           style={styles.dropdown}
           value={"tCO2-eşd./MWh"}
-          // onChangeText={(text) => setAmount(text)}
         />
         </View>
         <View style={styles.container}>
         <TextInput
           style={styles.dropdown}
           placeholder="Üreticinin Özellikleri"
-          // value={amount}
-          // onChangeText={(text) => setAmount(text)}
+          value={specification}
+          onChangeText={(text) => setSpecification(text)}
         />
         </View>
         <View style={styles.container}>
         <TextInput
           style={styles.dropdown}
           placeholder="Sertifikalandırılmış mı?"
-          // value={amount}
-          // onChangeText={(text) => setAmount(text)}
+          value={certificateCheck}
+          onChangeText={(text) => setCertificateCheck(text)}
         />
         </View>
         <View style={styles.container}>
         <TextInput
           style={styles.dropdown}
           placeholder="İtfa belgesi tanımlama belge numarası?"
-          // value={amount}
-          // onChangeText={(text) => setAmount(text)}
+          value={document}
+          onChangeText={(text) => setDocument(text)}
+          type="number"
+          keyboardType="numeric"
         />
         </View>
         <View style={styles.container}>
         <TextInput
           style={styles.dropdown}
           placeholder="Sertifikaya konu elektriğin üretim yılı?"
-          // value={amount}
-          // onChangeText={(text) => setAmount(text)}
+          value={year}
+          onChangeText={(text) => setYear(text)}
+          type="number"
+          keyboardType="numeric"
         />
         </View>
         <View style={styles.container}>
         <TextInput
           style={styles.dropdown}
           placeholder="Bütçesi/Ödenen tutar?"
-          // value={amount}
-          // onChangeText={(text) => setAmount(text)}
+          value={cost}
+          onChangeText={(text) => setCost(text)}
+          type="number"
+          keyboardType="numeric"
         />
         </View>  
       </View>): null}

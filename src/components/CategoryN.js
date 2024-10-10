@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TextInput, View,ScrollView } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import PrimaryButton from './PrimaryButton';
 
@@ -34,22 +34,25 @@ const satınAlım = [
 
 
 const CategoryN = () => {
+  const [year, setYear] = useState(null);
   const [month, setMonth] = useState(null);
-  const [amount, setAmount] = useState(null);
   const [buying, setBuying] = useState(null);
+  const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   const [unit, setUnit] = useState(null);
 
 
   return (
+    <ScrollView contentContainerStyle={{flexGrow: 1}}
+    keyboardShouldPersistTaps='handled'>
     <View style={styles.whole}>
       <Text style={styles.title}>Satın Alınan Hizmetler Kaynaklı Emisyonlar</Text>
         <View style={styles.container}>
         <TextInput
           style={styles.dropdown}
           placeholder="Yıl"
-          value={amount}
-          onChangeText={(text) => setAmount(text)}
+          value={year}
+          onChangeText={(text) => setYear(text)}
           type="number"
           keyboardType="numeric"
         />
@@ -106,8 +109,8 @@ const CategoryN = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Değer"
-          value={amount}
-          onChangeText={(text) => setAmount(text)}
+          value={value}
+          onChangeText={(text) => setValue(text)}
           type="number"
           keyboardType="numeric"
         />
@@ -126,6 +129,7 @@ const CategoryN = () => {
         <PrimaryButton children={"Kaydet"} onPress={() => alert('Bilgileriniz Kaydedildi!!')}/>
       </View>
     </View>
+    </ScrollView>
   );
 };
 

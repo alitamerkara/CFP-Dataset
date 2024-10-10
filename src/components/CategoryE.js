@@ -49,16 +49,24 @@ const sertifika = [
 const CategoryE = () => {
   const [country, setCountry] = useState(null);
   const [month, setMonth] = useState(null);
-  const [amount, setAmount] = useState(null);
+  const [type, setType] = useState(null);
   const [energy, setEnergy] = useState(null);
-  const [isFocus, setIsFocus] = useState(false);
+  const [amount, setAmount] = useState(null);
   const [unit, setUnit] = useState(null);
   const [certificate, setCertificate] = useState(null);
-  const [type, setType] = useState(null);
+  const [emission, setEmission] = useState(null);
+  const [specification, setSpecification] = useState(null);
+  const [certificateCheck, setCertificateCheck] = useState(null);
+  const [document, setDocument] = useState(null);
+  const [year, setYear] = useState(null);
+  const [cost, setCost] = useState(null);
+  const [consumption, setConsumption] = useState(null);
+  const [isFocus, setIsFocus] = useState(false);
 
 
   return (
-    <ScrollView>
+    <ScrollView contentContainerStyle={{flexGrow: 1}}
+    keyboardShouldPersistTaps='handled'>
     <View style={styles.whole}>
       <View style={styles.container}>
         <TextInput
@@ -144,6 +152,8 @@ const CategoryE = () => {
           placeholder="Miktar"
           value={amount}
           onChangeText={(text) => setAmount(text)}
+          type="number"
+          keyboardType="numeric"
         />
       </View>
       <View style={styles.container}>
@@ -196,8 +206,8 @@ const CategoryE = () => {
         <TextInput
           style={styles.dropdown}
           placeholder=" Konum Temelli Toplam Elektrik Tüketimi"
-          value={amount}
-          onChangeText={(text) => setAmount(text)}
+          value={consumption}
+          onChangeText={(text) => setConsumption(text)}
           type="number"
           keyboardType="numeric"
         />
@@ -207,64 +217,61 @@ const CategoryE = () => {
         <View style={styles.container}>
         <TextInput
           style={styles.dropdown}
-          placeholder=" Miktar"
-          value={amount}
-          onChangeText={(text) => setAmount(text)}
-        />
-      </View>
-        <View style={styles.container}>
-        <TextInput
-          style={styles.dropdown}
           placeholder="Emisyon Faktörü?"
-          // value={amount}
-          // onChangeText={(text) => setAmount(text)}
+          value={emission}
+          onChangeText={(text) => setEmission(text)}
         />
         </View>
         <View style={styles.container}>
         <TextInput
           style={styles.dropdown}
           value={"tCO2-eşd./MWh"}
-          // onChangeText={(text) => setAmount(text)}
         />
         </View>
         <View style={styles.container}>
         <TextInput
           style={styles.dropdown}
           placeholder="Üreticinin Özellikleri"
-          // value={amount}
-          // onChangeText={(text) => setAmount(text)}
+          value={specification}
+          onChangeText={(text) => setSpecification(text)}
         />
         </View>
         <View style={styles.container}>
         <TextInput
           style={styles.dropdown}
           placeholder="Sertifikalandırılmış mı?"
-          // value={amount}
-          // onChangeText={(text) => setAmount(text)}
+          value={certificateCheck}
+          onChangeText={(text) => setCertificateCheck(text)}
         />
         </View>
         <View style={styles.container}>
         <TextInput
           style={styles.dropdown}
           placeholder="İtfa belgesi tanımlama belge numarası?"
-          // value={amount}
-          // onChangeText={(text) => setAmount(text)}
+          value={document}
+          onChangeText={(text) => setDocument(text)}
+          type="number"
+          keyboardType="numeric"
         />
         </View>
         <View style={styles.container}>
         <TextInput
           style={styles.dropdown}
           placeholder="Sertifikaya konu elektriğin üretim yılı?"
-          // value={amount}
-          // onChangeText={(text) => setAmount(text)}
+          value={year}
+          onChangeText={(text) => setYear(text)}
+          type="number"
+          keyboardType="numeric"
         />
         </View>
         <View style={styles.container}>
         <TextInput
           style={styles.dropdown}
           placeholder="Bütçesi/Ödenen tutar?"
-          // value={amount}
-          // onChangeText={(text) => setAmount(text)}
+          value={cost}
+          onChangeText={(text) => setCost(text)}
+          type="number"
+          keyboardType="numeric"
         />
         </View>  
       </View>): null}

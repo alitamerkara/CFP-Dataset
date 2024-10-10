@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, TextInput, View, ScrollView} from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import PrimaryButton from './PrimaryButton';
 
@@ -55,12 +55,14 @@ const CategoryB = () => {
   const [type, setType] = useState(null);
   const [capacity, setCapacity] = useState(null);
   const [charge, setCharge] = useState(null);
-  const [amount, setAmount] = useState(null);
   const [unit, setUnit] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
 
 
   return (
+    <ScrollView contentContainerStyle={{flexGrow: 1}}
+  keyboardShouldPersistTaps='handled'
+>
     <View style={styles.whole}>
       <View style={styles.container}>
         <Dropdown
@@ -152,8 +154,8 @@ const CategoryB = () => {
         <TextInput
           style={styles.dropdown} // Apply the dropdown style to the TextInput
           placeholder="Şarj / Dolum Miktarı"
-          value={capacity}
-          onChangeText={(text) => setCapacity(text)}
+          value={charge}
+          onChangeText={(text) => setCharge(text)}
         />
       </View>
       <View style={styles.container}>
@@ -163,18 +165,18 @@ const CategoryB = () => {
           selectedTextStyle={styles.selectedTextStyle}
           inputSearchStyle={styles.inputSearchStyle}
           iconStyle={styles.iconStyle}
-          data={kaynak}
+          data={birim}
           search
           maxHeight={300}
           labelField="label"
           valueField="value"
           placeholder='Birim Seçin'
           searchPlaceholder="Search..."
-          value={source}
+          value={unit}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
-            setSource(item.value);
+            setUnit(item.value);
             setIsFocus(false);
           }}
         />
@@ -184,6 +186,7 @@ const CategoryB = () => {
         <PrimaryButton children={"Kaydet"} onPress={() => alert('Bilgileriniz Kaydedildi!')}/>
       </View>
     </View>
+    </ScrollView>
   );
 };
 

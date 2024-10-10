@@ -1,26 +1,38 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TextInput, View} from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import PrimaryButton from './PrimaryButton';
 import { ScrollView } from 'react-native-gesture-handler';
 
+const birim = [
+  { label: 'Ton', value: '1' },
+  { label: 'Kg', value: '2' },
+  { label: 'M3', value: '3' },
+];
 
 const CategoryO = () => {
-  const [amount, setAmount] = useState(null);
+  const [product, setProduct] = useState(null);
+  const [value, setValue] = useState(null);
   const [unit, setUnit] = useState(null);
+  const [secondValue, setSecondValue] = useState(null);
+  const [secondUnit, setSecondUnit] = useState(null);
+  const [thirdValue, setThirdValue] = useState(null);
+  const [thirdUnit, setThirdUnit] = useState(null);
+  const [isFocus, setIsFocus] = useState(false);
 
+  
 
   return (
-    <ScrollView>
+    <ScrollView contentContainerStyle={{flexGrow: 1}}
+    keyboardShouldPersistTaps='handled'>
       <Text style={styles.title}>Satışı Yapılan Ürünlerin Kullanımı kaynaklı Emisyonlar</Text>
     <View style={styles.whole}>
         <View style={styles.container}>
         <TextInput
           style={styles.dropdown}
           placeholder="Satış Yapılan Ürün"
-          value={amount}
-          onChangeText={(text) => setAmount(text)}
-          type="number"
+          value={product}
+          onChangeText={(text) => setProduct(text)}
         />
       </View>
       <View style={styles.field}>
@@ -29,21 +41,35 @@ const CategoryO = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Değer"
-          value={amount}
-          onChangeText={(text) => setAmount(text)}
+          value={value}
+          onChangeText={(text) => setValue(text)}
           type="number"
           keyboardType="numeric"
         />
-      </View> 
+      </View>
       <View style={styles.container}>
-        <TextInput
-          style={styles.dropdown}
-          placeholder="Birim"
+        <Dropdown
+          style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={birim}
+          search
+          maxHeight={300}
+          labelField="label"
+          valueField="value"
+          placeholder='Birim'
+          searchPlaceholder="Search..."
           value={unit}
-          onChangeText={(text) => setUnit(text)}
-          type="number"
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={item => {
+            setUnit(item.label);
+            setIsFocus(false);
+          }}
         />
-      </View> 
+      </View>
       </View>
       <View style={styles.field}>
         <Text>Emisyon Faktörü</Text>
@@ -51,21 +77,35 @@ const CategoryO = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Değer"
-          value={amount}
-          onChangeText={(text) => setAmount(text)}
+          value={secondValue}
+          onChangeText={(text) => setSecondValue(text)}
           type="number"
           keyboardType="numeric"
         />
-      </View> 
+      </View>
       <View style={styles.container}>
-        <TextInput
-          style={styles.dropdown}
-          placeholder="Birim"
-          value={unit}
-          onChangeText={(text) => setUnit(text)}
-          type="number"
+        <Dropdown
+          style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={birim}
+          search
+          maxHeight={300}
+          labelField="label"
+          valueField="value"
+          placeholder='Birim'
+          searchPlaceholder="Search..."
+          value={secondUnit}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={item => {
+            setSecondUnit(item.label);
+            setIsFocus(false);
+          }}
         />
-      </View> 
+      </View>
       </View>
       <View style={styles.field}>
         <Text>Emisyon Miktarları (ton CO2e)</Text>
@@ -73,21 +113,35 @@ const CategoryO = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Değer"
-          value={amount}
-          onChangeText={(text) => setAmount(text)}
+          value={thirdValue}
+          onChangeText={(text) => setThirdValue(text)}
           type="number"
           keyboardType="numeric"
         />
-      </View> 
+      </View>
       <View style={styles.container}>
-        <TextInput
-          style={styles.dropdown}
-          placeholder="Birim"
-          value={unit}
-          onChangeText={(text) => setUnit(text)}
-          type="number"
+        <Dropdown
+          style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={birim}
+          search
+          maxHeight={300}
+          labelField="label"
+          valueField="value"
+          placeholder='Birim'
+          searchPlaceholder="Search..."
+          value={thirdUnit}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={item => {
+            setThirdUnit(item.label);
+            setIsFocus(false);
+          }}
         />
-      </View> 
+      </View>
       </View>
       <View style={styles.container}>
         <PrimaryButton children={"Kaydet"} onPress={() => alert('Bilgileriniz Kaydedildi!!')}/>

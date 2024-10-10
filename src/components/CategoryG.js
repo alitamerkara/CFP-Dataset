@@ -23,12 +23,6 @@ const yol = [
   { label: 'Havayolu', value: '3' },
   { label: 'Demiryolu', value: '4' },
 ];
-const kaynak = [
-  { label: 'On Road (Kamyon, otobüs, araba vb.)', value: '1' },
-  { label: 'Off Road (Forklift, kepçe, dozer vb.)', value: '2' },
-  { label: 'Off Road İki Zamanlı (Ot biçme makinesi vb.)', value: '3' },
-  { label: 'Off Road Dört Zamanlı (Çim biçme makinesi vb.)', value: '4' }, 
-];
 const birim = [
   { label: 'Yolcu.km', value: '1' },
   { label: 'Km', value: '2' }, 
@@ -48,17 +42,19 @@ const emisyon = [
 
 const CategoryG = () => {
   const [month, setMonth] = useState(null);
-  const [fuel, setFuel] = useState(null);
-  const [id, setId] = useState(null);
-  const [vehicle, setVehicle] = useState(null);
   const [road, setRoad] = useState(null);
+  const [vehicle, setVehicle] = useState(null);
+  const [type, setType] = useState(null);
+  const [fuel, setFuel] = useState(null);
   const [emission, setEmission] = useState(null);
-  const [isFocus, setIsFocus] = useState(false);
-  const [amount, setAmount] = useState(null);
+  const [value, setValue] = useState(null);
   const [unit, setUnit] = useState(null);
+  const [isFocus, setIsFocus] = useState(false);
+
 
   return (
-    <ScrollView>
+    <ScrollView contentContainerStyle={{flexGrow: 1}}
+    keyboardShouldPersistTaps='handled'>
       <Text style={styles.title}>İşe Gidiş - Geliş</Text>
     <View style={styles.whole}>
       <View style={styles.container}>
@@ -113,16 +109,14 @@ const CategoryG = () => {
           placeholder="Taşıt"
           value={vehicle}
           onChangeText={(text) => setVehicle(text)}
-          type="number"
         />
       </View>
       <View style={styles.container}>
         <TextInput
           style={styles.dropdown}
           placeholder="Taşıt Tipi"
-          value={vehicle}
-          onChangeText={(text) => setVehicle(text)}
-          type="number"
+          value={type}
+          onChangeText={(text) => setType(text)}
         />
       </View>
       <View style={styles.container}>
@@ -177,8 +171,8 @@ const CategoryG = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Değer"
-          value={amount}
-          onChangeText={(text) => setAmount(text)}
+          value={value}
+          onChangeText={(text) => setValue(text)}
           type="number"
           keyboardType="numeric"
         />

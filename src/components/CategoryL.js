@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TextInput, View, ScrollView } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import PrimaryButton from './PrimaryButton';
 
@@ -20,13 +20,18 @@ const birim = [
 
 const CategoryL = () => {
   const [goods, setGoods] = useState(null);
-  const [id, setId] = useState(null);
+  const [object, setObject] = useState(null);
+  const [value, setValue] = useState(null);
   const [unit, setUnit] = useState(null);
+  const [secondValue, setSecondValue] = useState(null);
+  const [secondUnit, setSecondUnit] = useState(null);
+  const [emission, setEmission] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
-  const [electric, setElectric] = useState(null);
 
 
   return (
+    <ScrollView contentContainerStyle={{flexGrow: 1}}
+    keyboardShouldPersistTaps='handled'>
     <View style={styles.whole}>
       <View style={styles.container}>
         <Dropdown
@@ -55,8 +60,8 @@ const CategoryL = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Duran Varlık"
-          value={electric}
-          onChangeText={(text) => setElectric(text)}
+          value={object}
+          onChangeText={(text) => setObject(text)}
         />
       </View>
       <View style={styles.field}>
@@ -65,20 +70,33 @@ const CategoryL = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Değer"
-          // value={amount}
-          // onChangeText={(text) => setAmount(text)}
+          value={value}
+          onChangeText={(text) => setValue(text)}
           type="number"
           keyboardType="numeric"
         />
       </View>
       <View style={styles.container}>
-        <TextInput
-          style={styles.dropdown}
-          placeholder="Birim"
-          // value={amount}
-          // onChangeText={(text) => setAmount(text)}
-          type="number"
-          keyboardType="numeric"
+      <Dropdown
+          style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={birim}
+          search
+          maxHeight={300}
+          labelField="label"
+          valueField="value"
+          placeholder='Birim'
+          searchPlaceholder="Search..."
+          value={unit}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={item => {
+            setUnit(item.value);
+            setIsFocus(false);
+          }}
         />
       </View>
       </View>
@@ -88,20 +106,34 @@ const CategoryL = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Değer"
-          // value={amount}
-          // onChangeText={(text) => setAmount(text)}
+          value={secondValue}
+          onChangeText={(text) => setSecondValue(text)}
           type="number"
           keyboardType="numeric"
         />
       </View>
       <View style={styles.container}>
-        <TextInput
-          style={styles.dropdown}
-          placeholder="Birim"
-          // value={amount}
-          // onChangeText={(text) => setAmount(text)}
-          type="number"
-          keyboardType="numeric"
+      <Dropdown
+          style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={birim}
+          search
+          maxHeight={300}
+          labelField="label"
+          valueField="value"
+          placeholder='Birim'
+          searchPlaceholder="Search..."
+          value={secondUnit}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={item => {
+            setSecondUnit(item.value);
+            setIsFocus(false);
+          }}
+          dropdownPosition='top'
         />
       </View>
       </View>
@@ -109,16 +141,15 @@ const CategoryL = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Emisyon Miktarları (ton CO2e)"
-          // value={amount}
-          // onChangeText={(text) => setAmount(text)}
-          type="number"
-          keyboardType="numeric"
+          value={emission}
+          onChangeText={(text) => setEmission(text)}
         />
       </View>
       <View style={styles.container}>
         <PrimaryButton children={"Kaydet"} onPress={() => alert('Bilgileriniz Kaydedildi!')}/>
       </View>
     </View>
+    </ScrollView>
   );
 };
 

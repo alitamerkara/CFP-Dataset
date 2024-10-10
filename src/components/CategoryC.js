@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, TextInput, View, ScrollView } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import PrimaryButton from './PrimaryButton';
 
@@ -43,15 +43,18 @@ const birim = [
 
 const CategoryC = () => {
   const [month, setMonth] = useState(null);
+  const [fuel, setFuel] = useState(null);
   const [source, setSource] = useState(null);
   const [id, setId] = useState(null);
-  const [fuel, setFuel] = useState(null);
   const [amount, setAmount] = useState(null);
   const [unit, setUnit] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
 
 
   return (
+    <ScrollView contentContainerStyle={{flexGrow: 1}}
+  keyboardShouldPersistTaps='handled'
+>
     <View style={styles.whole}>
       <View style={styles.container}>
         <Dropdown
@@ -167,6 +170,7 @@ const CategoryC = () => {
         <PrimaryButton onPress={() => alert('Bilgileriniz Kaydedildi!')}>Kaydet</PrimaryButton>
       </View>
     </View>
+    </ScrollView>
   );
 };
 

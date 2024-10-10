@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, TextInput, View,ScrollView } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import PrimaryButton from './PrimaryButton';
 
@@ -21,13 +21,18 @@ const birim = [
 
 const CategoryK = () => {
   const [goods, setGoods] = useState(null);
-  const [id, setId] = useState(null);
-  const [unit, setUnit] = useState(null);
-  const [isFocus, setIsFocus] = useState(false);
   const [electric, setElectric] = useState(null);
+  const [id, setId] = useState(null);
+  const [amount, setAmount] = useState(null);
+  const [unit, setUnit] = useState(null);
+  const [cost, setCost] = useState(null);
+  const [value, setValue] = useState(null);
+  const [isFocus, setIsFocus] = useState(false);
 
 
   return (
+    <ScrollView contentContainerStyle={{flexGrow: 1}}
+    keyboardShouldPersistTaps='handled'>
     <View style={styles.whole}>
       <View style={styles.container}>
         <Dropdown
@@ -73,8 +78,10 @@ const CategoryK = () => {
         <TextInput
           style={styles.dropdown} // Apply the dropdown style to the TextInput
           placeholder="Malzeme Miktarı"
-          value={id}
-          onChangeText={(text) => setId(text)}
+          value={amount}
+          onChangeText={(text) => setAmount(text)}
+          type="number"
+          keyboardType="numeric"
         />
       </View>
       <View style={styles.container}>
@@ -104,22 +111,27 @@ const CategoryK = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Satın Alma Bedeli (USD)"
-          value={id}
-          onChangeText={(text) => setId(text)}
+          value={cost}
+          onChangeText={(text) => setCost(text)}
+          type="number"
+          keyboardType="numeric"
         />
       </View>
       <View style={styles.container}>
         <TextInput
           style={styles.dropdown}
           placeholder="Faaliyet Verisi Değeri"
-          value={id}
-          onChangeText={(text) => setId(text)}
+          value={value}
+          onChangeText={(text) => setValue(text)}
+          type="number"
+          keyboardType="numeric"
         />
       </View>
       <View style={styles.container}>
         <PrimaryButton children={"Kaydet"} onPress={() => alert('Bilgileriniz Kaydedildi!')}/>
       </View>
     </View>
+    </ScrollView>
   );
 };
 

@@ -48,17 +48,22 @@ const emisyon = [
 
 const CategoryF = () => {
   const [month, setMonth] = useState(null);
-  const [fuel, setFuel] = useState(null);
-  const [id, setId] = useState(null);
-  const [vehicle, setVehicle] = useState(null);
   const [road, setRoad] = useState(null);
+  const [vehicle, setVehicle] = useState(null);
+  const [vehicleType, setVehicleType] = useState(null);
+  const [fuel, setFuel] = useState(null);
   const [emission, setEmission] = useState(null);
-  const [isFocus, setIsFocus] = useState(false);
-  const [amount, setAmount] = useState(null);
   const [unit, setUnit] = useState(null);
+  const [value, setValue] = useState(null);
+  const [loadPercent, setLoadPercent] = useState(null);
+  const [startLocation, setStartLocation] = useState(null);
+  const [arriveLocation, setArriveLocation] = useState(null);
+  const [isFocus, setIsFocus] = useState(false);
+
 
   return (
-    <ScrollView>
+    <ScrollView contentContainerStyle={{flexGrow: 1}}
+    keyboardShouldPersistTaps='handled'>
     <View style={styles.whole}>
       <View style={styles.container}>
         <Dropdown
@@ -119,8 +124,8 @@ const CategoryF = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Taşıt Tipi"
-          value={vehicle}
-          onChangeText={(text) => setVehicle(text)}
+          value={vehicleType}
+          onChangeText={(text) => setVehicleType(text)}
           type="number"
         />
       </View>
@@ -151,8 +156,8 @@ const CategoryF = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Başlangıç Lokasyonu"
-          value={id}
-          onChangeText={(text) => setId(text)}
+          value={startLocation}
+          onChangeText={(text) => setStartLocation(text)}
           type="number"
         />
       </View>
@@ -160,8 +165,8 @@ const CategoryF = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Varış Lokasyonu"
-          value={id}
-          onChangeText={(text) => setId(text)}
+          value={arriveLocation}
+          onChangeText={(text) => setArriveLocation(text)}
           type="number"
         />
       </View>
@@ -192,9 +197,10 @@ const CategoryF = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Araç Yüklenme Oranı %"
-          value={id}
-          onChangeText={(text) => setId(text)}
+          value={loadPercent}
+          onChangeText={(text) => setLoadPercent(text)}
           type="number"
+          keyboardType="numeric"
         />
       </View>
       <View style={styles.field}>
@@ -203,8 +209,8 @@ const CategoryF = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Değer"
-          value={amount}
-          onChangeText={(text) => setAmount(text)}
+          value={value}
+          onChangeText={(text) => setValue(text)}
           type="number"
           keyboardType="numeric"
         />

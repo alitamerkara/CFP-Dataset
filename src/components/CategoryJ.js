@@ -21,12 +21,6 @@ const faaliyet = [
   { label: 'Konaklama', value: '1' },
   { label: 'Ulaşım', value: '2' },
 ];
-const kaynak = [
-  { label: 'On Road (Kamyon, otobüs, araba vb.)', value: '1' },
-  { label: 'Off Road (Forklift, kepçe, dozer vb.)', value: '2' },
-  { label: 'Off Road İki Zamanlı (Ot biçme makinesi vb.)', value: '3' },
-  { label: 'Off Road Dört Zamanlı (Çim biçme makinesi vb.)', value: '4' }, 
-];
 const birim = [
   { label: 'Yolcu.km', value: '1' },
   { label: 'Km', value: '2' }, 
@@ -53,17 +47,22 @@ const yol = [
 
 const CategoryJ = () => {
   const [month, setMonth] = useState(null);
-  const [fuel, setFuel] = useState(null);
-  const [id, setId] = useState(null);
-  const [vehicle, setVehicle] = useState(null);
+  const [reason, setReason] = useState(null);
+  const [country, setCountry] = useState(null);
   const [road, setRoad] = useState(null);
+  const [vehicle, setVehicle] = useState(null);
+  const [vehicleType, setVehicleType] = useState(null);
+  const [fuel, setFuel] = useState(null);
+  const [startLocation, setStartLocation] = useState(null);
+  const [arriveLocation, setArriveLocation] = useState(null);
   const [emission, setEmission] = useState(null);
-  const [isFocus, setIsFocus] = useState(false);
   const [amount, setAmount] = useState(null);
-  const [unit, setUnit] = useState(null);
+  const [unit, setUnit] = useState(null); 
+  const [isFocus, setIsFocus] = useState(false);
 
   return (
-    <ScrollView>
+    <ScrollView contentContainerStyle={{flexGrow: 1}}
+    keyboardShouldPersistTaps='handled'>
       <Text style={styles.title}>İş Seyahatleri</Text>
     <View style={styles.whole}>
       <View style={styles.container}>
@@ -103,11 +102,11 @@ const CategoryJ = () => {
           valueField="value"
           placeholder='Emisyona Sebep Olan Faaliyet'
           searchPlaceholder="Search..."
-          value={road}
+          value={reason}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
-            setRoad(item.value);
+            setReason(item.value);
             setIsFocus(false);
           }}
         />
@@ -116,9 +115,8 @@ const CategoryJ = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Konaklamanın Yapıldığı Ülke"
-          value={vehicle}
-          onChangeText={(text) => setVehicle(text)}
-          type="number"
+          value={country}
+          onChangeText={(text) => setCountry(text)}
         />
       </View>
       <View style={styles.container}>
@@ -150,16 +148,14 @@ const CategoryJ = () => {
           placeholder="Taşıt"
           value={vehicle}
           onChangeText={(text) => setVehicle(text)}
-          type="number"
         />
       </View>
       <View style={styles.container}>
         <TextInput
           style={styles.dropdown}
           placeholder="Taşıt Tipi"
-          value={vehicle}
-          onChangeText={(text) => setVehicle(text)}
-          type="number"
+          value={vehicleType}
+          onChangeText={(text) => setVehicleType(text)}
         />
       </View>
       <View style={styles.container}>
@@ -189,18 +185,18 @@ const CategoryJ = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Başlangıç Lokasyonu"
-          value={id}
-          onChangeText={(text) => setId(text)}
-          type="number"
+          value={startLocation}
+          onChangeText={(text) => setStartLocation(text)}
+          
         />
       </View>
       <View style={styles.container}>
         <TextInput
           style={styles.dropdown}
           placeholder="Varış Lokasyonu"
-          value={id}
-          onChangeText={(text) => setId(text)}
-          type="number"
+          value={arriveLocation}
+          onChangeText={(text) => setArriveLocation(text)}
+          
         />
       </View>
       <View style={styles.container}>

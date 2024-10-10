@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import React, { useState} from 'react';
+import { StyleSheet, TextInput, View, ScrollView } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import PrimaryButton from './PrimaryButton';
 
@@ -52,7 +52,6 @@ const birim = [
   { label: 'kWh', value: '5' }, 
 ];
 
-
 const CategoryA = () => {
   const [month, setMonth] = useState(null);
   const [sector, setSector] = useState(null);
@@ -65,7 +64,10 @@ const CategoryA = () => {
 
 
   return (
-    <View style={styles.whole}>
+    <ScrollView contentContainerStyle={{flexGrow: 1}}
+  keyboardShouldPersistTaps='handled'
+>
+    <View style={styles.whole} >
       <View style={styles.container}>
         <Dropdown
           style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
@@ -84,7 +86,7 @@ const CategoryA = () => {
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
-            setMonth(item.value);
+            setMonth(item.label);
             setIsFocus(false);
           }}
         />
@@ -107,7 +109,7 @@ const CategoryA = () => {
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
-            setSector(item.value);
+            setSector(item.label);
             setIsFocus(false);
           }}
         />
@@ -130,7 +132,7 @@ const CategoryA = () => {
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
-            setFuel(item.value);
+            setFuel(item.label);
             setIsFocus(false);
           }}
         />
@@ -153,17 +155,19 @@ const CategoryA = () => {
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
-            setSource(item.value);
+            setSource(item.label);
             setIsFocus(false);
           }}
         />
       </View>
       <View style={styles.container}>
         <TextInput
-          style={styles.dropdown} // Apply the dropdown style to the TextInput
+          style={styles.dropdown}
           placeholder="Ekipman ID"
           value={id}
           onChangeText={(text) => setId(text)}
+          type="number"
+          keyboardType="numeric"
         />
       </View>
       <View style={styles.container}>
@@ -173,6 +177,7 @@ const CategoryA = () => {
           value={amount}
           onChangeText={(text) => setAmount(text)}
           type="number"
+          keyboardType="numeric"
         />
       </View>
       <View style={styles.container}>
@@ -199,9 +204,17 @@ const CategoryA = () => {
         />
       </View>
       <View style={styles.container}>
-        <PrimaryButton children={"Kaydet"} onPress={() => alert('Bilgileriniz Kaydedildi!!')}/>
+        <PrimaryButton children={"Kaydet"} onPress={() =>{
+        if(month && sector && fuel && source && id && amount && unit){
+          console.log(month, sector, fuel, source, id, amount, unit);
+          alert('Bilgileriniz Kaydedildi!!')
+        }else{
+          alert('Lütfen tüm alanları doldurunuz');
+        }}
+        }/>
       </View>
     </View>
+    </ScrollView>
   );
 };
 

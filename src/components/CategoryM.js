@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import PrimaryButton from './PrimaryButton';
 
@@ -27,25 +27,6 @@ const yöntem = [
   { label: 'Düzenli Depolama', value: '5' },
   { label: 'Geri Dönüşüm', value: '6' },
 ];
-const yakıt = [
-  { label: 'Doğal Gaz', value: '1' },
-  { label: 'Dizel', value: '2' },
-  { label: 'LPG', value: '3' },
-  { label: 'Asetilen', value: '4' }, 
-  { label: 'Benzin', value: '5' }, 
-  { label: 'LNG', value: '6' }, 
-  { label: 'CNG', value: '7' }, 
-];
-const kaynak = [
-  { label: 'Jeneratör', value: '1' },
-  { label: 'Kazan', value: '2' },
-  { label: 'Fırın', value: '3' },
-  { label: 'Kompresör', value: '4' }, 
-  { label: 'Seyyar Jeneratör', value: '5' }, 
-  { label: 'Pompa', value: '6' }, 
-  { label: 'Kojenerasyon ', value: '7' }, 
-  { label: 'Trijinerasyon ', value: '8' }, 
-];
 const birim = [
   { label: 'Ton', value: '1' },
   { label: 'Kg', value: '2' },
@@ -55,16 +36,15 @@ const birim = [
 
 const CategoryM = () => {
   const [type, setType] = useState(null);
-  const [fuel, setFuel] = useState(null);
-  const [source, setSource] = useState(null);
-  const [id, setId] = useState(null);
-  const [amount, setAmount] = useState(null);
+  const [method, setMethod] = useState(null);
+  const [value, setValue] = useState(null);
   const [unit, setUnit] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
-  const [method, setMethod] = useState(null);
 
 
   return (
+    <ScrollView contentContainerStyle={{flexGrow: 1}}
+    keyboardShouldPersistTaps='handled'>
     <View style={styles.whole}>
       <View style={styles.container}>
         <Dropdown
@@ -118,8 +98,8 @@ const CategoryM = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Değer"
-          value={amount}
-          onChangeText={(text) => setAmount(text)}
+          value={value}
+          onChangeText={(text) => setValue(text)}
           type="number"
           keyboardType="numeric"
         />
@@ -153,6 +133,7 @@ const CategoryM = () => {
         <PrimaryButton children={"Kaydet"} onPress={() => alert('Bilgileriniz Kaydedildi!!')}/>
       </View>
     </View>
+    </ScrollView>
   );
 };
 
