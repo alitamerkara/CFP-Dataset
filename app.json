@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Dataset",
-    "slug": "Dataset",
+    "slug": "dataset",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -15,13 +15,16 @@
       "supportsTablet": true
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "c40d9891-1ec2-43ca-936d-2c430a08955d"
+      }
+    },
+    "owner": "alitamerkara"
   }
 }
