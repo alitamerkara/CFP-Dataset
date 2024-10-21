@@ -1,40 +1,57 @@
-import React, { useEffect } from 'react';
-import { View, Button, StyleSheet } from 'react-native';
-import * as Google from 'expo-auth-session/providers/google';
+import React, { useState } from 'react';
+import { View, Button, TextInput, Alert, StyleSheet, Text } from 'react-native';
+import { auth } from './firebase'; // firebase.js'yi içe aktar
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import * as WebBrowser from 'expo-web-browser';
-import firebase from 'firebase/app';
-import 'firebase/auth';
 
 WebBrowser.maybeCompleteAuthSession();
 
 const LoginScreen = ({ navigation }) => {
-  const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
-    clientId: 'YOUR_WEB_CLIENT_ID', // Buraya Google Cloud Console'dan aldığın web client ID'yi koymalısın.
-  });
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  useEffect(() => {
-    if (response?.type === 'success') {
-      const { id_token } = response.params;
-      const credential = firebase.auth.GoogleAuthProvider.credential(id_token);
-      firebase.auth().signInWithCredential(credential)
-        .then(() => {
-          navigation.navigate('Home');
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+  // Firebase ile giriş işlemi
+  const signIn = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      Alert.alert('Giriş Başarılı', 'Kullanıcı giriş yaptı!');
+      navigation.navigate('Home'); // Giriş başarılıysa 'Home' sayfasına yönlendir
+    } catch (error) {
+      Alert.alert('Giriş Hatası', error.message);
     }
-  }, [response]);
+  };
+
+  // Firebase ile kayıt işlemi
+  const signUp = async () => {
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      Alert.alert('Kayıt Başarılı', 'Kullanıcı kaydedildi!');
+    } catch (error) {
+      Alert.alert('Kayıt Hatası', error.message);
+    }
+  };
 
   return (
     <View style={styles.container}>
-      <Button
-        title="Google ile Giriş Yap"
-        disabled={!request}
-        onPress={() => {
-          promptAsync();
-        }}
+      <TextInput
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+        keyboardType="email-address"
+        autoCapitalize="none"
+        style={styles.input}
       />
+      <TextInput
+        placeholder="Password"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+        style={styles.input}
+      />
+      <Button title="Sign In" onPress={signIn} />
+      <Button title="Sign Up" onPress={signUp} />
+      {/* Burada bilgilendirme metni veya başka bir metin göstermek isterseniz */}
+      <Text style={styles.infoText}>Henüz bir hesabınız yok mu? Kayıt olun.</Text>
     </View>
   );
 };
@@ -44,6 +61,19 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 16,
+  },
+  input: {
+    width: '100%',
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    marginBottom: 12,
+  },
+  infoText: {
+    marginTop: 20,
+    color: '#555',
   },
 });
 
