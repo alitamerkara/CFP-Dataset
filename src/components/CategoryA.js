@@ -1,56 +1,65 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, TextInput, View, ScrollView } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import PrimaryButton from './PrimaryButton';
+import { db } from '../../firebase';
+import { collection, addDoc } from "firebase/firestore";  
+import { auth } from '../../firebase';
 
 const ay = [
-  { label: 'Ocak', value: '1' },
-  { label: 'Şubat', value: '2' },
-  { label: 'Mart', value: '3' },
-  { label: 'Nisan', value: '4' },
-  { label: 'Mayıs', value: '5' },
-  { label: 'Haziran', value: '6' },
-  { label: 'Temmuz', value: '7' },
-  { label: 'Ağustos', value: '8' },
-  { label: 'Eylül', value: '9' },
-  { label: 'Ekim', value: '10' },
-  { label: 'Kasım', value: '11' },
-  { label: 'Aralık', value: '12' }, 
+  { label: 'Ocak', value: 'Ocak' },
+  { label: 'Şubat', value: 'Şubat' },
+  { label: 'Mart', value: 'Mart' },
+  { label: 'Nisan', value: 'Nisan' },
+  { label: 'Mayıs', value: 'Mayıs' },
+  { label: 'Haziran', value: 'Haziran' },
+  { label: 'Temmuz', value: 'Temmuz' },
+  { label: 'Ağustos', value: 'Ağustos' },
+  { label: 'Eylül', value: 'Eylül' },
+  { label: 'Ekim', value: 'Ekim' },
+  { label: 'Kasım', value: 'Kasım' },
+  { label: 'Aralık', value: 'Aralık' }, 
 ];
+
 const sektor = [
-  { label: 'Demir-Çelik', value: '1' },
-  { label: 'Alüminyum', value: '2' },
-  { label: 'Çimento', value: '3' },
-  { label: 'Gübre', value: '4' }, 
-  { label: 'Elektrik ve Hidrojen', value: '5' },
-  { label: 'Diğer', value: '6' },
+  { label: 'Demir-Çelik', value: 'Demir-Çelik' },
+  { label: 'Alüminyum', value: 'Alüminyum' },
+  { label: 'Çimento', value: 'Çimento' },
+  { label: 'Gübre', value: 'Gübre' }, 
+  { label: 'Elektrik ve Hidrojen', value: 'Elektrik ve Hidrojen' },
+  { label: 'Diğer', value: 'Diğer' },
 ];
+
 const yakıt = [
-  { label: 'Doğal Gaz', value: '1' },
-  { label: 'Dizel', value: '2' },
-  { label: 'LPG', value: '3' },
-  { label: 'Asetilen', value: '4' }, 
-  { label: 'Benzin', value: '5' }, 
-  { label: 'LNG', value: '6' }, 
-  { label: 'CNG', value: '7' }, 
+  { label: 'Doğal Gaz', value: 'Doğal Gaz' },
+  { label: 'Dizel', value: 'Dizel' },
+  { label: 'LPG', value: 'LPG' },
+  { label: 'Asetilen', value: 'Asetilen' }, 
+  { label: 'Benzin', value: 'Benzin' }, 
+  { label: 'LNG', value: 'LNG' }, 
+  { label: 'CNG', value: 'CNG' }, 
 ];
+
 const kaynak = [
-  { label: 'Jeneratör', value: '1' },
-  { label: 'Kazan', value: '2' },
-  { label: 'Fırın', value: '3' },
-  { label: 'Kompresör', value: '4' }, 
-  { label: 'Seyyar Jeneratör', value: '5' }, 
-  { label: 'Pompa', value: '6' }, 
-  { label: 'Kojenerasyon ', value: '7' }, 
-  { label: 'Trijinerasyon ', value: '8' }, 
+  { label: 'Jeneratör', value: 'Jeneratör' },
+  { label: 'Kazan', value: 'Kazan' },
+  { label: 'Fırın', value: 'Fırın' },
+  { label: 'Kompresör', value: 'Kompresör' }, 
+  { label: 'Seyyar Jeneratör', value: 'Seyyar Jeneratör' }, 
+  { label: 'Pompa', value: 'Pompa' }, 
+  { label: 'Kojenerasyon', value: 'Kojenerasyon' }, 
+  { label: 'Trijinerasyon', value: 'Trijinerasyon' }, 
 ];
+
 const birim = [
-  { label: 'Ton', value: '1' },
-  { label: 'Lt', value: '2' },
-  { label: 'Sm3', value: '3' },
-  { label: 'M3', value: '4' }, 
-  { label: 'kWh', value: '5' }, 
+  { label: 'Ton', value: 'Ton' },
+  { label: 'Lt', value: 'Lt' },
+  { label: 'Sm3', value: 'Sm3' },
+  { label: 'M3', value: 'M3' }, 
+  { label: 'kWh', value: 'kWh' }, 
 ];
+
+
 
 const CategoryA = () => {
   const [month, setMonth] = useState(null);
@@ -62,158 +71,173 @@ const CategoryA = () => {
   const [unit, setUnit] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
 
+  const handleSave = async () => {
+    if (month && sector && fuel && source && id && amount && unit) {
+      const userEmail = auth.currentUser.email;
+      try {
+        await addDoc(collection(db, "CategoryA"), {
+          month,
+          sector,
+          fuel,
+          source,
+          id,
+          amount,
+          unit,
+          userEmail, 
+        });
+        alert('Bilgileriniz Kaydedildi!!');
+      } catch (error) {
+        console.error("Hata: ", error);
+        alert('Veri kaydetme sırasında hata oluştu');
+      }
+    } else {
+      alert('Lütfen tüm alanları doldurunuz');
+    }
+  };
 
   return (
-    <ScrollView contentContainerStyle={{flexGrow: 1}}
-  keyboardShouldPersistTaps='handled'
->
-    <View style={styles.whole} >
-      <View style={styles.container}>
-        <Dropdown
-          style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
-          iconStyle={styles.iconStyle}
-          data={ay}
-          search
-          maxHeight={300}
-          labelField="label"
-          valueField="value"
-          placeholder='Ay Seçin'
-          searchPlaceholder="Search..."
-          value={month}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
-          onChange={item => {
-            setMonth(item.label);
-            setIsFocus(false);
-          }}
-        />
+    <ScrollView contentContainerStyle={{flexGrow: 1}} keyboardShouldPersistTaps='handled'>
+      <View style={styles.whole}>
+        <View style={styles.container}>
+          <Dropdown
+            style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={ay}
+            search
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            placeholder='Ay Seçin'
+            searchPlaceholder="Search..."
+            value={month}
+            onFocus={() => setIsFocus(true)}
+            onBlur={() => setIsFocus(false)}
+            onChange={item => {
+              setMonth(item.label);
+              setIsFocus(false);
+            }}
+          />
+        </View>
+        <View style={styles.container}>
+          <Dropdown
+            style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={sektor}
+            search
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            placeholder='Sektör Seçin'
+            searchPlaceholder="Search..."
+            value={sector}
+            onFocus={() => setIsFocus(true)}
+            onBlur={() => setIsFocus(false)}
+            onChange={item => {
+              console.log(item.label)
+              setSector(item.label);
+              setIsFocus(false);
+            }}
+         />
+        </View>
+        <View style={styles.container}>
+          <Dropdown
+            style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={yakıt}
+            search
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            placeholder='Yakıt Seçin'
+            searchPlaceholder="Search..."
+            value={fuel}
+            onFocus={() => setIsFocus(true)}
+            onBlur={() => setIsFocus(false)}
+            onChange={item => {
+              setFuel(item.label);
+              setIsFocus(false);
+            }}
+          />
+        </View>
+        <View style={styles.container}>
+          <Dropdown
+            style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={kaynak}
+            search
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            placeholder='Kaynak Seçin'
+            searchPlaceholder="Search..."
+            value={source}
+            onFocus={() => setIsFocus(true)}
+            onBlur={() => setIsFocus(false)}
+            onChange={item => {
+              setSource(item.label);
+              setIsFocus(false);
+            }}
+          />
+        </View>
+        <View style={styles.container}>
+          <TextInput
+            style={styles.dropdown}
+            placeholder="Ekipman ID"
+            value={id}
+            onChangeText={(text) => setId(text)}
+            type="number"
+            keyboardType="numeric"
+          />
+        </View>
+        <View style={styles.container}>
+          <TextInput
+            style={styles.dropdown}
+            placeholder="Miktar"
+            value={amount}
+            onChangeText={(text) => setAmount(text)}
+            type="number"
+            keyboardType="numeric"
+          />
+        </View>
+        <View style={styles.container}>
+          <Dropdown
+            style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={birim}
+            search
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            placeholder='Birim Seçin'
+            searchPlaceholder="Search..."
+            value={unit}
+            onFocus={() => setIsFocus(true)}
+            onBlur={() => setIsFocus(false)}
+            onChange={item => {
+              setUnit(item.value);
+              setIsFocus(false);
+            }}
+          />
+        </View>
+        <View style={styles.container}>
+          <PrimaryButton children={"Kaydet"} onPress={handleSave} />
+        </View>
       </View>
-      <View style={styles.container}>
-        <Dropdown
-          style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
-          iconStyle={styles.iconStyle}
-          data={sektor}
-          search
-          maxHeight={300}
-          labelField="label"
-          valueField="value"
-          placeholder='Sektör Seçin'
-          searchPlaceholder="Search..."
-          value={sector}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
-          onChange={item => {
-            setSector(item.label);
-            setIsFocus(false);
-          }}
-        />
-      </View>
-      <View style={styles.container}>
-        <Dropdown
-          style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
-          iconStyle={styles.iconStyle}
-          data={yakıt}
-          search
-          maxHeight={300}
-          labelField="label"
-          valueField="value"
-          placeholder='Yakıt Seçin'
-          searchPlaceholder="Search..."
-          value={fuel}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
-          onChange={item => {
-            setFuel(item.label);
-            setIsFocus(false);
-          }}
-        />
-      </View>
-      <View style={styles.container}>
-        <Dropdown
-          style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
-          iconStyle={styles.iconStyle}
-          data={kaynak}
-          search
-          maxHeight={300}
-          labelField="label"
-          valueField="value"
-          placeholder='Kaynak Seçin'
-          searchPlaceholder="Search..."
-          value={source}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
-          onChange={item => {
-            setSource(item.label);
-            setIsFocus(false);
-          }}
-        />
-      </View>
-      <View style={styles.container}>
-        <TextInput
-          style={styles.dropdown}
-          placeholder="Ekipman ID"
-          value={id}
-          onChangeText={(text) => setId(text)}
-          type="number"
-          keyboardType="numeric"
-        />
-      </View>
-      <View style={styles.container}>
-        <TextInput
-          style={styles.dropdown}
-          placeholder="Miktar"
-          value={amount}
-          onChangeText={(text) => setAmount(text)}
-          type="number"
-          keyboardType="numeric"
-        />
-      </View>
-      <View style={styles.container}>
-        <Dropdown
-          style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
-          iconStyle={styles.iconStyle}
-          data={birim}
-          search
-          maxHeight={300}
-          labelField="label"
-          valueField="value"
-          placeholder='Birim Seçin'
-          searchPlaceholder="Search..."
-          value={unit}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
-          onChange={item => {
-            setUnit(item.value);
-            setIsFocus(false);
-          }}
-        />
-      </View>
-      <View style={styles.container}>
-        <PrimaryButton children={"Kaydet"} onPress={() =>{
-        if(month && sector && fuel && source && id && amount && unit){
-          console.log(month, sector, fuel, source, id, amount, unit);
-          alert('Bilgileriniz Kaydedildi!!')
-        }else{
-          alert('Lütfen tüm alanları doldurunuz');
-        }}
-        }/>
-      </View>
-    </View>
     </ScrollView>
   );
 };
@@ -230,19 +254,19 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#FFFFE0',
     padding: 16,
+    borderRadius: 8,
+    marginBottom: 16,
   },
   dropdown: {
     height: 50,
-    borderColor: '#64d185',
-    backgroundColor:"#FFFFE0",
-    color:'green',
-    borderWidth: 0.5,
+    borderColor: 'gray',
+    borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 8,
   },
   placeholderStyle: {
     fontSize: 16,
-    color:'green'
+    color: 'gray',
   },
   selectedTextStyle: {
     fontSize: 16,
@@ -254,15 +278,5 @@ const styles = StyleSheet.create({
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
-  },
-  saveButton: {
-    backgroundColor: '#4CAF50',
-    padding: 15,
-    alignItems: 'center',
-    borderRadius: 8,
-  },
-  saveButtonText: {
-    color: 'white',
-    fontSize: 20,
   },
 });

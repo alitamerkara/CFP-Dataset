@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { StyleSheet, TextInput, View, ScrollView} from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import PrimaryButton from './PrimaryButton';
+import { db } from '../../firebase';
+import { collection, addDoc } from "firebase/firestore";  
+import { auth } from '../../firebase';
+
 
 const ay = [
   { label: 'Ocak', value: '1' },
@@ -57,7 +61,29 @@ const CategoryB = () => {
   const [charge, setCharge] = useState(null);
   const [unit, setUnit] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
-
+  const handleSave = async () => {
+    if (month && source && id && type && capacity && charge && unit) {
+      const userEmail = auth.currentUser.email;
+      try {
+        await addDoc(collection(db, "CategoryB"), {
+          month,
+          source,
+          id,
+          type,
+          capacity,
+          charge,
+          unit,
+          userEmail
+        });
+        alert('Bilgileriniz Kaydedildi!!');
+      } catch (error) {
+        console.error("Hata: ", error);
+        alert('Veri kaydetme sırasında hata oluştu');
+      }
+    } else {
+      alert('Lütfen tüm alanları doldurunuz');
+    }
+  };
 
   return (
     <ScrollView contentContainerStyle={{flexGrow: 1}}
@@ -117,6 +143,7 @@ const CategoryB = () => {
           value={id}
           onChangeText={(text) => setId(text)}
           type="number"
+          keyboardType='numeric'
         />
       </View>
       <View style={styles.container}>
@@ -144,18 +171,22 @@ const CategoryB = () => {
       </View>
       <View style={styles.container}>
         <TextInput
-          style={styles.dropdown} // Apply the dropdown style to the TextInput
+          style={styles.dropdown}
           placeholder="Kapasite"
           value={capacity}
           onChangeText={(text) => setCapacity(text)}
+          type="number"
+          keyboardType='numeric'
         />
       </View>
       <View style={styles.container}>
         <TextInput
-          style={styles.dropdown} // Apply the dropdown style to the TextInput
+          style={styles.dropdown}
           placeholder="Şarj / Dolum Miktarı"
           value={charge}
           onChangeText={(text) => setCharge(text)}
+          type="number"
+          keyboardType='numeric'
         />
       </View>
       <View style={styles.container}>
@@ -183,7 +214,7 @@ const CategoryB = () => {
       </View>
      
       <View style={styles.container}>
-        <PrimaryButton children={"Kaydet"} onPress={() => alert('Bilgileriniz Kaydedildi!')}/>
+        <PrimaryButton children={"Kaydet"} onPress={handleSave}/>
       </View>
     </View>
     </ScrollView>

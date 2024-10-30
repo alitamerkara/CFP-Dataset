@@ -1,79 +1,87 @@
 import React, { useState } from 'react';
-import { View, Button, TextInput, Alert, StyleSheet, Text } from 'react-native';
-import { auth } from './firebase'; // firebase.js'yi içe aktar
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
-import * as WebBrowser from 'expo-web-browser';
-
-WebBrowser.maybeCompleteAuthSession();
+import { View, TextInput, Alert, StyleSheet, Text, ImageBackground } from 'react-native';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from './firebase';
+import PrimaryButton from './src/components/PrimaryButton';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // Firebase ile giriş işlemi
-  const signIn = async () => {
+  const handleSignIn = async () => {
+    if (!email || !password) {
+      Alert.alert('Giriş Hatası', 'Lütfen email ve şifre girin.');
+      return;
+    }
+
     try {
       await signInWithEmailAndPassword(auth, email, password);
       Alert.alert('Giriş Başarılı', 'Kullanıcı giriş yaptı!');
-      navigation.navigate('Home'); // Giriş başarılıysa 'Home' sayfasına yönlendir
+      navigation.navigate('Home');
     } catch (error) {
+      console.log('Firebase error:', error);
       Alert.alert('Giriş Hatası', error.message);
     }
   };
 
-  // Firebase ile kayıt işlemi
-  const signUp = async () => {
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      Alert.alert('Kayıt Başarılı', 'Kullanıcı kaydedildi!');
-    } catch (error) {
-      Alert.alert('Kayıt Hatası', error.message);
-    }
-  };
-
   return (
-    <View style={styles.container}>
-      <TextInput
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        style={styles.input}
-      />
-      <Button title="Sign In" onPress={signIn} />
-      <Button title="Sign Up" onPress={signUp} />
-      {/* Burada bilgilendirme metni veya başka bir metin göstermek isterseniz */}
-      <Text style={styles.infoText}>Henüz bir hesabınız yok mu? Kayıt olun.</Text>
-    </View>
+    <ImageBackground source={require('./assets/mainBg.avif')} style={styles.background}>
+      <View style={styles.container}>
+        <Text style={styles.title}>CFP Veri Seti</Text>
+        <TextInput
+          placeholder="Email"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+          autoCapitalize="none"
+          style={styles.input}
+        />
+        <TextInput
+          placeholder="Password"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+          style={styles.input}
+        />
+        <PrimaryButton onPress={handleSignIn}>Giriş Yap</PrimaryButton>
+        <Text style={styles.subTitle}>Made by <Text style={{fontStyle:"italic", fontWeight:"500"}}>Ahmet Burak Erdemir</Text></Text>
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  background: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 16,
+  },
+  container: {
+    width: '80%',
+    padding: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+    backgroundColor: 'rgba(245, 245, 245, 0.7)', 
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    color: 'green',
   },
   input: {
     width: '100%',
     padding: 10,
     borderWidth: 1,
     borderColor: '#ccc',
-    borderRadius: 5,
+    borderRadius: 10,
     marginBottom: 12,
+    backgroundColor: '#fff',
   },
-  infoText: {
-    marginTop: 20,
-    color: '#555',
+  subTitle: {
+    fontSize:10,
+    marginTop: 15,
+    color: 'green',
   },
 });
 

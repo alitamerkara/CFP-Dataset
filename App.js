@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, Button, Alert } from 'react-native';
 import HomeScreen from './src/components/HomeScreen';
 import LoginScreen from './LoginScreen';
 import { auth } from './firebase';
+import { signOut } from 'firebase/auth';
 import CategoryA from './src/components/CategoryA';
 import CategoryB from './src/components/CategoryB';
 import CategoryC from './src/components/CategoryC';
@@ -30,13 +31,22 @@ export default function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => { // Burada auth kullanılıyor
+    const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user);
       setIsLoading(false);
     });
 
-    return unsubscribe; // Bileşen unmount edildiğinde dinleyiciyi kapat
+    return unsubscribe;
   }, []);
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      Alert.alert('Çıkış Yapıldı', 'Başarıyla çıkış yaptınız.');
+    } catch (error) {
+      Alert.alert('Çıkış Hatası', error.message);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -50,7 +60,7 @@ export default function App() {
     <NavigationContainer>
       {user ? (
         <Drawer.Navigator
-          initialRouteName="HomeScreen"
+          initialRouteName="Home"
           screenOptions={{
             headerStyle: {
               backgroundColor: '#d4edda',
@@ -64,8 +74,15 @@ export default function App() {
             },
           }}
         >
-          <Drawer.Screen name="Home" component={HomeScreen} />
-          {/* Diğer bileşenleri buraya ekle */}
+          <Drawer.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{
+              headerRight: () => (
+                <Button onPress={handleSignOut} title="Çıkış Yap" color="red" />
+              ),
+            }}
+          />
           <Drawer.Screen name="CategoryA" component={CategoryA} />
           <Drawer.Screen name="CategoryB" component={CategoryB} />
           <Drawer.Screen name="CategoryC" component={CategoryC} />

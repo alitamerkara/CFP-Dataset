@@ -1,7 +1,7 @@
-// firebase.js
-import { initializeApp } from "firebase/app";
-import { getAuth, initializeAuth, getReactNativePersistence } from "firebase/auth";
+import { initializeApp, getApps } from "firebase/app";
+import { initializeAuth, getReactNativePersistence } from "firebase/auth";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getFirestore } from "firebase/firestore"; 
 
 // Firebase konfigürasyonu
 const firebaseConfig = {
@@ -14,10 +14,20 @@ const firebaseConfig = {
   measurementId: "G-4P7EY8N49F"
 };
 
-// Firebase'i başlat
-const app = initializeApp(firebaseConfig);
+// Firebase'i sadece eğer başlatılmadıysa başlat
+let app;
+if (getApps().length === 0) {
+  app = initializeApp(firebaseConfig);
+} else {
+  app = getApps()[0];
+}
+
+// AsyncStorage ile oturum kalıcılığını sağla
 const auth = initializeAuth(app, {
-  persistence: getReactNativePersistence(AsyncStorage) // AsyncStorage ile oturum kalıcılığını sağla
+  persistence: getReactNativePersistence(AsyncStorage)
 });
 
-export { auth };
+// Firestore'u başlat
+const db = getFirestore(app);
+
+export { auth, db };
