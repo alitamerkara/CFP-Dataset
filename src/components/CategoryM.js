@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, View, ScrollView } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import PrimaryButton from './PrimaryButton';
+import { db } from '../../firebase';
+import { collection, addDoc } from "firebase/firestore";  
+import { auth } from '../../firebase';
 
 const tip = [
   { label: 'Evsel Atık Su', value: '1' },
@@ -40,6 +43,26 @@ const CategoryM = () => {
   const [value, setValue] = useState(null);
   const [unit, setUnit] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
+  const handleSave = async () => {
+    if (type && method && value && unit) {
+      const userEmail = auth.currentUser.email;
+      try {
+        await addDoc(collection(db, "CategoryM"), {
+          type,
+          method,
+          value,
+          unit,
+          userEmail
+        });
+        alert('Bilgileriniz Kaydedildi!!');
+      } catch (error) {
+        console.error("Hata: ", error);
+        alert('Veri kaydetme sırasında hata oluştu');
+      }
+    } else {
+      alert('Lütfen tüm alanları doldurunuz');
+    }
+  };
 
 
   return (
@@ -130,7 +153,7 @@ const CategoryM = () => {
       </View>
       </View>
       <View style={styles.container}>
-        <PrimaryButton children={"Kaydet"} onPress={() => alert('Bilgileriniz Kaydedildi!!')}/>
+        <PrimaryButton children={"Kaydet"} onPress={handleSave}/>
       </View>
     </View>
     </ScrollView>

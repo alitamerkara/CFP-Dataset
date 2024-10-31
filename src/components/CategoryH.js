@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, View, ScrollView } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import PrimaryButton from './PrimaryButton';
+import { db } from '../../firebase';
+import { collection, addDoc } from "firebase/firestore";  
+import { auth } from '../../firebase';
 
 const ay = [
   { label: 'Ocak', value: '1' },
@@ -47,11 +50,37 @@ const CategoryH = () => {
   const [vehicleType, setVehicleType] = useState(null);
   const [fuel, setFuel] = useState(null);
   const [emission, setEmission] = useState(null);
-  const [isFocus, setIsFocus] = useState(false);
   const [startLocation, setStartLocation] = useState(null);
   const [arriveLocation, setArriveLocation] = useState(null);
   const [value, setValue] = useState(null);
   const [unit, setUnit] = useState(null);
+  const [isFocus, setIsFocus] = useState(false);
+  const handleSave = async () => {
+    if (month && road && vehicle && vehicleType && fuel && emission && startLocation && arriveLocation && value && unit) {
+      const userEmail = auth.currentUser.email;
+      try {
+        await addDoc(collection(db, "Müşterilerin Tesise Gelişi"), {
+          month,
+          road,
+          vehicle,
+          vehicleType,
+          fuel,
+          emission,
+          startLocation,
+          arriveLocation,
+          value,
+          unit,
+          userEmail
+        });
+        alert('Bilgileriniz Kaydedildi!!');
+      } catch (error) {
+        console.error("Hata: ", error);
+        alert('Veri kaydetme sırasında hata oluştu');
+      }
+    } else {
+      alert('Lütfen tüm alanları doldurunuz');
+    }
+  };
 
   return (
     <ScrollView contentContainerStyle={{flexGrow: 1}}
@@ -222,7 +251,7 @@ const CategoryH = () => {
       </View>
       </View>
       <View style={styles.container}>
-        <PrimaryButton onPress={() => alert('Bilgileriniz Kaydedildi!')}>Kaydet</PrimaryButton>
+        <PrimaryButton onPress={handleSave}>Kaydet</PrimaryButton>
       </View>
     </View>
     </ScrollView>

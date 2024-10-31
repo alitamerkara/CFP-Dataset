@@ -3,11 +3,14 @@ import { StyleSheet, Text, TextInput, View} from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import PrimaryButton from './PrimaryButton';
 import { ScrollView } from 'react-native-gesture-handler';
+import { db } from '../../firebase';
+import { collection, addDoc } from "firebase/firestore";  
+import { auth } from '../../firebase';
 
 const birim = [
-  { label: 'Ton', value: '1' },
-  { label: 'Kg', value: '2' },
-  { label: 'M3', value: '3' },
+  { label: 'Ton', value: 'Ton' },
+  { label: 'Kg', value: 'Kg' },
+  { label: 'M3', value: 'M3' },
 ];
 
 const CategoryO = () => {
@@ -19,6 +22,30 @@ const CategoryO = () => {
   const [thirdValue, setThirdValue] = useState(null);
   const [thirdUnit, setThirdUnit] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
+  const handleSave = async () => {
+    if (equipment && value && unit && secondValue && secondUnit && thirdValue && thirdUnit) {
+      const userEmail = auth.currentUser.email;
+      try {
+        await addDoc(collection(db, "Kiraya Verilen Ekipmanların Kullanımı Kaynaklı Emisyonlar"), {
+          equipment,
+          value,
+          unit,
+          secondValue,
+          secondUnit,
+          thirdValue,
+          thirdUnit,
+          userEmail
+        });
+        alert('Bilgileriniz Kaydedildi!!');
+      } catch (error) {
+        console.error("Hata: ", error);
+        alert('Veri kaydetme sırasında hata oluştu');
+      }
+    } else {
+      alert('Lütfen tüm alanları doldurunuz');
+    }
+  };
+  
 
 
   return (
@@ -143,7 +170,7 @@ const CategoryO = () => {
       </View>
       </View>
       <View style={styles.container}>
-        <PrimaryButton children={"Kaydet"} onPress={() => alert('Bilgileriniz Kaydedildi!!')}/>
+        <PrimaryButton children={"Kaydet"} onPress={handleSave}/>
       </View>
     </View>
     </ScrollView>

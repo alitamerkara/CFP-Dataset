@@ -20,7 +20,7 @@ const LoginScreen = ({ navigation }) => {
       navigation.navigate('Home');
     } catch (error) {
       console.log('Firebase error:', error);
-      Alert.alert('Giriş Hatası', error.message);
+      // Alert.alert('Giriş Hatası', error.message);
     }
   };
 

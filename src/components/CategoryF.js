@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, View, ScrollView } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import PrimaryButton from './PrimaryButton';
+import { db } from '../../firebase';
+import { collection, addDoc } from "firebase/firestore";  
+import { auth } from '../../firebase';
 
 const ay = [
   { label: 'Ocak', value: '1' },
@@ -59,6 +62,33 @@ const CategoryF = () => {
   const [startLocation, setStartLocation] = useState(null);
   const [arriveLocation, setArriveLocation] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
+  const handleSave = async () => {
+    if (month && road && vehicle && vehicleType && fuel && emission && unit && value && loadPercent && startLocation && arriveLocation) {
+      const userEmail = auth.currentUser.email;
+      try {
+        await addDoc(collection(db, "CategoryF"), {
+          month,
+          road,
+          vehicle,
+          vehicleType,
+          fuel,
+          emission,
+          unit,
+          value,
+          loadPercent,
+          startLocation,
+          arriveLocation,
+          userEmail
+        });
+        alert('Bilgileriniz Kaydedildi!!');
+      } catch (error) {
+        console.error("Hata: ", error);
+        alert('Veri kaydetme sırasında hata oluştu');
+      }
+    } else {
+      alert('Lütfen tüm alanları doldurunuz');
+    }
+  };
 
 
   return (
@@ -241,7 +271,7 @@ const CategoryF = () => {
       </View>
       </View>
       <View style={styles.container}>
-        <PrimaryButton onPress={() => alert('Bilgileriniz Kaydedildi!')}>Kaydet</PrimaryButton>
+        <PrimaryButton onPress={handleSave}>Kaydet</PrimaryButton>
       </View>
     </View>
     </ScrollView>

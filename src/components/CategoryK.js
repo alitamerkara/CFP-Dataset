@@ -68,7 +68,7 @@ const CategoryK = () => {
       </View>
       <View style={styles.container}>
         <TextInput
-          style={styles.dropdown} // Apply the dropdown style to the TextInput
+          style={styles.dropdown} 
           placeholder="Malzeme Grubu için NAICS Kodu"
           value={id}
           onChangeText={(text) => setId(text)}

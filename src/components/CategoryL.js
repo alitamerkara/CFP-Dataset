@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, View, ScrollView } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import PrimaryButton from './PrimaryButton';
+import { db } from '../../firebase';
+import { collection, addDoc } from "firebase/firestore";  
+import { auth } from '../../firebase';
 
 const malzeme = [
   { label: 'Mutfak Ekipmanları', value: '1' },
@@ -27,7 +30,29 @@ const CategoryL = () => {
   const [secondUnit, setSecondUnit] = useState(null);
   const [emission, setEmission] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
-
+  const handleSave = async () => {
+    if (goods && object && value && unit && secondValue && secondUnit && emission) {
+      const userEmail = auth.currentUser.email;
+      try {
+        await addDoc(collection(db, "CategoryL"), {
+          goods,
+          object,
+          value,
+          unit,
+          secondValue,
+          secondUnit,
+          emission,
+          userEmail
+        });
+        alert('Bilgileriniz Kaydedildi!!');
+      } catch (error) {
+        console.error("Hata: ", error);
+        alert('Veri kaydetme sırasında hata oluştu');
+      }
+    } else {
+      alert('Lütfen tüm alanları doldurunuz');
+    }
+  };
 
   return (
     <ScrollView contentContainerStyle={{flexGrow: 1}}
@@ -146,7 +171,7 @@ const CategoryL = () => {
         />
       </View>
       <View style={styles.container}>
-        <PrimaryButton children={"Kaydet"} onPress={() => alert('Bilgileriniz Kaydedildi!')}/>
+        <PrimaryButton children={"Kaydet"} onPress={handleSave}/>
       </View>
     </View>
     </ScrollView>

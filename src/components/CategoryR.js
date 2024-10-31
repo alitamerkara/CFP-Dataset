@@ -39,7 +39,26 @@ const CategoryR = () => {
   const [method, setMethod] = useState(null);
   const [value, setValue] = useState(null);
   const [unit, setUnit] = useState(null);
-  const [isFocus, setIsFocus] = useState(false);
+  const [isFocus, setIsFocus] = useState(false); const handleSave = async () => {
+    if (type && method && value && unit ) {
+      const userEmail = auth.currentUser.email;
+      try {
+        await addDoc(collection(db, "Satışı Yapılan Ürünlerin Kullanım Ömrü Sonrası Bertarafı Kaynaklı Emisyonlar"), {
+          type,
+          method,
+          value,
+          unit,
+          userEmail
+        });
+        alert('Bilgileriniz Kaydedildi!!');
+      } catch (error) {
+        console.error("Hata: ", error);
+        alert('Veri kaydetme sırasında hata oluştu');
+      }
+    } else {
+      alert('Lütfen tüm alanları doldurunuz');
+    }
+  };
 
 
   return (

@@ -89,16 +89,16 @@ export default function App() {
           <Drawer.Screen name="CategoryD" component={CategoryD} />
           <Drawer.Screen name="CategoryE" component={CategoryE} />
           <Drawer.Screen name="CategoryF" component={CategoryF} />
-          <Drawer.Screen name="CategoryG" component={CategoryG} />
-          <Drawer.Screen name="CategoryH" component={CategoryH} />
-          <Drawer.Screen name="CategoryJ" component={CategoryJ} />
+          <Drawer.Screen name="İşe Gidiş - Geliş" component={CategoryG} />
+          <Drawer.Screen name="Müşterilerin Tesise Gelişi" component={CategoryH} />
+          <Drawer.Screen name="İş Seyahatleri" component={CategoryJ} />
           <Drawer.Screen name="CategoryK" component={CategoryK} />
           <Drawer.Screen name="CategoryL" component={CategoryL} />
           <Drawer.Screen name="CategoryM" component={CategoryM} />
-          <Drawer.Screen name="CategoryN" component={CategoryN} />
-          <Drawer.Screen name="CategoryO" component={CategoryO} />
-          <Drawer.Screen name="CategoryP" component={CategoryP} />
-          <Drawer.Screen name="CategoryR" component={CategoryR} />
+          <Drawer.Screen name="Satın Alınan Hizmetler Kaynaklı Emisyonlar" component={CategoryN} />
+          <Drawer.Screen name="Satışı Yapılan Ürünlerin Kullanımı kaynaklı Emisyonlar" component={CategoryO} />
+          <Drawer.Screen name="Kiraya Verilen Ekipmanların Kullanımı Kaynaklı Emisyonlar" component={CategoryP} />
+          <Drawer.Screen name="Satışı Yapılan Ürünlerin Kullanım Ömrü Sonrası Bertarafı Kaynaklı Emisyonlar" component={CategoryR} />
           <Drawer.Screen name="CategoryS" component={CategoryS} />
         </Drawer.Navigator>
       ) : (
