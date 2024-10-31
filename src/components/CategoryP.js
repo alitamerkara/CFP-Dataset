@@ -15,25 +15,25 @@ const birim = [
 
 const CategoryO = () => {
  const [equipment , setEquipment] = useState(null);
- const [value, setValue] = useState(null);
-  const [unit, setUnit] = useState(null);
-  const [secondValue, setSecondValue] = useState(null);
-  const [secondUnit, setSecondUnit] = useState(null);
-  const [thirdValue, setThirdValue] = useState(null);
-  const [thirdUnit, setThirdUnit] = useState(null);
+ const [activityValue, setActivityValue] = useState(null);
+ const [activityUnit, setActivityUnit] = useState(null);
+ const [emissionValue, setEmissionValue] = useState(null);
+ const [emissionUnit, setEmissionUnit] = useState(null);
+ const [emissionAmountValue, setEmissionAmountValue] = useState(null);
+ const [emissionAmountUnit, setEmissionAmountUnit] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   const handleSave = async () => {
-    if (equipment && value && unit && secondValue && secondUnit && thirdValue && thirdUnit) {
+    if (equipment && activityValue && activityUnit && emissionValue && emissionUnit && emissionAmountValue && emissionAmountUnit) {
       const userEmail = auth.currentUser.email;
       try {
         await addDoc(collection(db, "Kiraya Verilen Ekipmanların Kullanımı Kaynaklı Emisyonlar"), {
           equipment,
-          value,
-          unit,
-          secondValue,
-          secondUnit,
-          thirdValue,
-          thirdUnit,
+          activityValue,
+          activityUnit,
+          emissionValue,
+          emissionUnit,
+          emissionAmountValue,
+          emissionAmountUnit,
           userEmail
         });
         alert('Bilgileriniz Kaydedildi!!');
@@ -67,8 +67,8 @@ const CategoryO = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Değer"
-          value={value}
-          onChangeText={(text) => setValue(text)}
+          value={activityValue}
+          onChangeText={(text) => setActivityValue(text)}
           type="number"
           keyboardType="numeric"
         />
@@ -87,11 +87,11 @@ const CategoryO = () => {
           valueField="value"
           placeholder='Birim'
           searchPlaceholder="Search..."
-          value={unit}
+          value={activityUnit}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
-            setUnit(item.label);
+            setActivityUnit(item.label);
             setIsFocus(false);
           }}
         />
@@ -103,8 +103,8 @@ const CategoryO = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Değer"
-          value={secondValue}
-          onChangeText={(text) => setSecondValue(text)}
+          value={emissionValue}
+          onChangeText={(text) => setEmissionValue(text)}
           type="number"
           keyboardType="numeric"
         />
@@ -123,11 +123,11 @@ const CategoryO = () => {
           valueField="value"
           placeholder='Birim'
           searchPlaceholder="Search..."
-          value={secondUnit}
+          value={emissionUnit}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
-            setSecondUnit(item.label);
+            setEmissionUnit(item.label);
             setIsFocus(false);
           }}
         />
@@ -139,8 +139,8 @@ const CategoryO = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Değer"
-          value={thirdValue}
-          onChangeText={(text) => setThirdValue(text)}
+          value={emissionAmountValue}
+          onChangeText={(text) => setEmissionAmountValue(text)}
           type="number"
           keyboardType="numeric"
         />
@@ -159,11 +159,11 @@ const CategoryO = () => {
           valueField="value"
           placeholder='Birim'
           searchPlaceholder="Search..."
-          value={thirdUnit}
+          value={emissionAmountUnit}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
-            setThirdUnit(item.label);
+            setEmissionAmountUnit(item.label);
             setIsFocus(false);
           }}
         />

@@ -66,13 +66,13 @@ const CategoryA = () => {
   const [sector, setSector] = useState(null);
   const [fuel, setFuel] = useState(null);
   const [source, setSource] = useState(null);
-  const [id, setId] = useState(null);
+  const [equipmentId, setEquipmentId] = useState(null);
   const [amount, setAmount] = useState(null);
   const [unit, setUnit] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
 
   const handleSave = async () => {
-    if (month && sector && fuel && source && id && amount && unit) {
+    if (month && sector && fuel && source && equipmentId && amount && unit) {
       const userEmail = auth.currentUser.email;
       try {
         await addDoc(collection(db, "CategoryA"), {
@@ -80,7 +80,7 @@ const CategoryA = () => {
           sector,
           fuel,
           source,
-          id,
+          equipmentId,
           amount,
           unit,
           userEmail, 
@@ -195,8 +195,8 @@ const CategoryA = () => {
           <TextInput
             style={styles.dropdown}
             placeholder="Ekipman ID"
-            value={id}
-            onChangeText={(text) => setId(text)}
+            value={equipmentId}
+            onChangeText={(text) => setEquipmentId(text)}
             type="number"
             keyboardType="numeric"
           />

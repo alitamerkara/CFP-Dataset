@@ -7,51 +7,51 @@ import { collection, addDoc } from "firebase/firestore";
 import { auth } from '../../firebase';
 
 const ay = [
-  { label: 'Ocak', value: '1' },
-  { label: 'Şubat', value: '2' },
-  { label: 'Mart', value: '3' },
-  { label: 'Nisan', value: '4' },
-  { label: 'Mayıs', value: '5' },
-  { label: 'Haziran', value: '6' },
-  { label: 'Temmuz', value: '7' },
-  { label: 'Ağustos', value: '8' },
-  { label: 'Eylül', value: '9' },
-  { label: 'Ekim', value: '10' },
-  { label: 'Kasım', value: '11' },
-  { label: 'Aralık', value: '12' }, 
+  { label: 'Ocak', value: 'Ocak' },
+  { label: 'Şubat', value: 'Şubat' },
+  { label: 'Mart', value: 'Mart' },
+  { label: 'Nisan', value: 'Nisan' },
+  { label: 'Mayıs', value: 'Mayıs' },
+  { label: 'Haziran', value: 'Haziran'},
+  { label: 'Temmuz', value: 'Temmuz' },
+  { label: 'Ağustos', value: 'Ağustos' },
+  { label: 'Eylül', value: 'Eylül' },
+  { label: 'Ekim', value: 'Ekim' },
+  { label: 'Kasım', value: 'Kasım' },
+  { label: 'Aralık', value: 'Aralık' },
 ];
 const faaliyet = [
-  { label: 'Konaklama', value: '1' },
-  { label: 'Ulaşım', value: '2' },
+  { label: 'Konaklama', value: 'Konaklama' },
+  { label: 'Ulaşım', value: 'Ulaşım' },
 ];
 const birim = [
-  { label: 'Yolcu.km', value: '1' },
-  { label: 'Km', value: '2' }, 
-  { label: 'Oda.Gece', value: '3' },
+  { label: 'Yolcu.km', value: 'Yolcu.km' },
+  { label: 'Km', value: 'Km' }, 
+  { label: 'Oda.Gece', value: 'Oda.Gece' },
 ];
 const yakıt = [
-  { label: 'Bilinmeyen', value: '1' },
-  { label: 'Dizel', value: '2' },
-  { label: 'LPG', value: '3' },
-  { label: 'Elektrik', value: '4' }, 
-  { label: 'Benzin', value: '5' }, 
+  { label: 'Bilinmeyen', value: 'Bilinmeyen' },
+  { label: 'Dizel', value: 'Dizel' },
+  { label: 'LPG', value: 'LPG' },
+  { label: 'Elektrik', value: 'Elektrik' }, 
+  { label: 'Benzin', value: 'Benzin' }, 
 ];
 const emisyon = [
-  { label: 'Yakıtların Yanması', value: '1' },
-  { label: 'WTT (Well To Tank)', value: '2' },
+  { label: 'Yakıtların Yanması', value: 'Yakıtların Yanması' },
+  { label: 'WTT (Well To Tank)', value: 'WTT (Well To Tank)' },
 ];
 const yol = [
-  { label: 'Karayolu', value: '1' },
-  { label: 'Denizyolu', value: '2' },
-  { label: 'Havayolu', value: '3' },
-  { label: 'Demiryolu', value: '4' },
+  { label: 'Karayolu', value: 'Karayolu' },
+  { label: 'Denizyolu', value: 'Denizyolu' },
+  { label: 'Havayolu', value: 'Havayolu' },
+  { label: 'Demiryolu', value: 'Demiryolu' },
 ];
 
 
 const CategoryJ = () => {
   const [month, setMonth] = useState(null);
   const [reason, setReason] = useState(null);
-  const [country, setCountry] = useState(null);
+  const [tripCountry, setTripCountry] = useState(null);
   const [road, setRoad] = useState(null);
   const [vehicle, setVehicle] = useState(null);
   const [vehicleType, setVehicleType] = useState(null);
@@ -59,17 +59,17 @@ const CategoryJ = () => {
   const [startLocation, setStartLocation] = useState(null);
   const [arriveLocation, setArriveLocation] = useState(null);
   const [emission, setEmission] = useState(null);
-  const [amount, setAmount] = useState(null);
+  const [activityValue, setActivityValue] = useState(null);
   const [unit, setUnit] = useState(null); 
   const [isFocus, setIsFocus] = useState(false);
   const handleSave = async () => {
-    if (month && reason && country && road && vehicle && vehicleType && fuel && emission && startLocation && arriveLocation && amount && unit) {
+    if (month && reason && tripCountry && road && vehicle && vehicleType && fuel && emission && startLocation && arriveLocation && activityValue && unit) {
       const userEmail = auth.currentUser.email;
       try {
         await addDoc(collection(db, "İş Seyahatleri"), {
           month,
           reason,
-          country,
+          tripCountry,
           road,
           vehicle,
           vehicleType,
@@ -77,7 +77,7 @@ const CategoryJ = () => {
           startLocation,
           arriveLocation,
           emission,
-          amount,
+          activityValue,
           unit,
           userEmail
         });
@@ -146,8 +146,8 @@ const CategoryJ = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Konaklamanın Yapıldığı Ülke"
-          value={country}
-          onChangeText={(text) => setCountry(text)}
+          value={tripCountry}
+          onChangeText={(text) => setTripCountry(text)}
         />
       </View>
       <View style={styles.container}>
@@ -259,8 +259,8 @@ const CategoryJ = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Değer"
-          value={amount}
-          onChangeText={(text) => setAmount(text)}
+          value={activityValue}
+          onChangeText={(text) => setActivityValue(text)}
           type="number"
           keyboardType="numeric"
         />

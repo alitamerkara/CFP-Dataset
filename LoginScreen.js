@@ -25,7 +25,7 @@ const LoginScreen = ({ navigation }) => {
   };
 
   return (
-    <ImageBackground source={require('./assets/mainBg.avif')} style={styles.background}>
+    <ImageBackground source={require('./assets/mainBg.png')} style={styles.background}>
       <View style={styles.container}>
         <Text style={styles.title}>CFP Veri Seti</Text>
         <TextInput

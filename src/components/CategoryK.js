@@ -1,33 +1,56 @@
-import React, { useState } from 'react';
+import React, { act, useState } from 'react';
 import { StyleSheet, TextInput, View,ScrollView } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import PrimaryButton from './PrimaryButton';
 
 const malzeme = [
-  { label: 'Elektrik', value: '1' },
-  { label: 'Kırtasiye', value: '2' },
-  { label: 'Donanım', value: '3' },
-  { label: 'Yazılım', value: '4' },
-  { label: 'Bilgi İşlem Sarf', value: '5' },
+  { label: 'Elektrik', value: 'Elektrik' },
+  { label: 'Kırtasiye', value: 'Kırtasiye' },
+  { label: 'Donanım', value: 'Donanım' },
+  { label: 'Yazılım', value: 'Yazılım' },
+  { label: 'Bilgi İşlem Sarf', value: 'Bilgi İşlem Sarf' },
 ];
 const birim = [
-  { label: 'Ton', value: '1' },
-  { label: 'Lt', value: '2' },
-  { label: 'Sm3', value: '3' },
-  { label: 'M3', value: '4' }, 
-  { label: 'kWh', value: '5' }, 
+  { label: 'Ton', value: 'Ton' },
+  { label: 'Lt', value: 'Lt' },
+  { label: 'Sm3', value: 'Sm3' },
+  { label: 'M3', value: 'M3' }, 
+  { label: 'kWh', value: 'kWh' }, 
 ];
 
 
 const CategoryK = () => {
   const [goods, setGoods] = useState(null);
   const [electric, setElectric] = useState(null);
-  const [id, setId] = useState(null);
-  const [amount, setAmount] = useState(null);
-  const [unit, setUnit] = useState(null);
-  const [cost, setCost] = useState(null);
-  const [value, setValue] = useState(null);
+  const [naicsId, setNaicsId] = useState(null);
+  const [goodsAmount, setGoodsAmount] = useState(null);
+  const [goodsUnit, setGoodsUnit] = useState(null);
+  const [costUSD, setCostUSD] = useState(null);
+  const [activityValue, setActivityValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
+  const handleSave = async () => {
+    if (goods && electric && naicsId && goodsAmount && goodsUnit && costUSD && activityValue) {
+      const userEmail = auth.currentUser.email;
+      try {
+        await addDoc(collection(db, "İş Seyahatleri"), {
+          goods,
+          electric,
+          naicsId,
+          goodsAmount,
+          goodsUnit,
+          costUSD,
+          activityValue,
+          userEmail
+        });
+        alert('Bilgileriniz Kaydedildi!!');
+      } catch (error) {
+        console.error("Hata: ", error);
+        alert('Veri kaydetme sırasında hata oluştu');
+      }
+    } else {
+      alert('Lütfen tüm alanları doldurunuz');
+    }
+  };
 
 
   return (
@@ -70,16 +93,16 @@ const CategoryK = () => {
         <TextInput
           style={styles.dropdown} 
           placeholder="Malzeme Grubu için NAICS Kodu"
-          value={id}
-          onChangeText={(text) => setId(text)}
+          value={naicsId}
+          onChangeText={(text) => setNaicsId(text)}
         />
       </View>
       <View style={styles.container}>
         <TextInput
           style={styles.dropdown} // Apply the dropdown style to the TextInput
           placeholder="Malzeme Miktarı"
-          value={amount}
-          onChangeText={(text) => setAmount(text)}
+          value={goodsAmount}
+          onChangeText={(text) => setGoodsAmount(text)}
           type="number"
           keyboardType="numeric"
         />
@@ -98,11 +121,11 @@ const CategoryK = () => {
           valueField="value"
           placeholder='Malzeme Miktar Birimi'
           searchPlaceholder="Search..."
-          value={unit}
+          value={goodsUnit}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
-            setUnit(item.value);
+            setGoodsUnit(item.value);
             setIsFocus(false);
           }}
         />
@@ -111,8 +134,8 @@ const CategoryK = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Satın Alma Bedeli (USD)"
-          value={cost}
-          onChangeText={(text) => setCost(text)}
+          value={costUSD}
+          onChangeText={(text) => setCostUSD(text)}
           type="number"
           keyboardType="numeric"
         />
@@ -121,14 +144,14 @@ const CategoryK = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Faaliyet Verisi Değeri"
-          value={value}
-          onChangeText={(text) => setValue(text)}
+          value={activityValue}
+          onChangeText={(text) => setActivityValue(text)}
           type="number"
           keyboardType="numeric"
         />
       </View>
       <View style={styles.container}>
-        <PrimaryButton children={"Kaydet"} onPress={() => alert('Bilgileriniz Kaydedildi!')}/>
+        <PrimaryButton children={"Kaydet"} onPress={handleSave}/>
       </View>
     </View>
     </ScrollView>

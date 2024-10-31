@@ -8,68 +8,68 @@ import { auth } from '../../firebase';
 
 
 const ay = [
-  { label: 'Ocak', value: '1' },
-  { label: 'Şubat', value: '2' },
-  { label: 'Mart', value: '3' },
-  { label: 'Nisan', value: '4' },
-  { label: 'Mayıs', value: '5' },
-  { label: 'Haziran', value: '6' },
-  { label: 'Temmuz', value: '7' },
-  { label: 'Ağustos', value: '8' },
-  { label: 'Eylül', value: '9' },
-  { label: 'Ekim', value: '10' },
-  { label: 'Kasım', value: '11' },
-  { label: 'Aralık', value: '12' }, 
+  { label: 'Ocak', value: 'Ocak' },
+  { label: 'Şubat', value: 'Şubat' },
+  { label: 'Mart', value: 'Mart' },
+  { label: 'Nisan', value: 'Nisan' },
+  { label: 'Mayıs', value: 'Mayıs' },
+  { label: 'Haziran', value: 'Haziran'},
+  { label: 'Temmuz', value: 'Temmuz' },
+  { label: 'Ağustos', value: 'Ağustos' },
+  { label: 'Eylül', value: 'Eylül' },
+  { label: 'Ekim', value: 'Ekim' },
+  { label: 'Kasım', value: 'Kasım' },
+  { label: 'Aralık', value: 'Aralık' },
 ];
 const tip = [
-  { label: 'R12', value: '1' },
-  { label: 'R134A', value: '2' },
-  { label: 'R32', value: '3' },
-  { label: 'R143A', value: '4' }, 
-  { label: 'R407C', value: '5' },
-  { label: 'FM200', value: '6' },
-  { label: 'CO2', value: '7' },
-  { label: 'R600A', value: '8' },
-  { label: 'R22', value: '9' },
-  { label: 'R404A', value: '10' },
-  { label: 'R410A', value: '11' },
+  { label: 'R12', value: 'R12' },
+  { label: 'R134A', value: 'R134A' },
+  { label: 'R32', value: 'R32' },
+  { label: 'R143A', value: 'R143A' }, 
+  { label: 'R407C', value: 'R407C' },
+  { label: 'FM200', value: 'FM200' },
+  { label: 'CO2', value: 'CO2' },
+  { label: 'R600A', value: 'R600A' },
+  { label: 'R22', value: 'R22' },
+  { label: 'R404A', value: 'R404A' },
+  { label: 'R410A', value: 'R410A' },
 ];
 const kaynak = [
-  { label: 'Buzdolabı', value: '1' },
-  { label: 'Klima', value: '2' },
-  { label: 'Chiller', value: '3' },
-  { label: 'VRF(Variable Refrigerant Flow)', value: '4' }, 
-  { label: 'Yangın Baskılama Sistemi', value: '5' }, 
-  { label: 'Gazlı Akım Kesici (Alçak Gerilim)', value: '6' }, 
-  { label: 'Gazlı Akım Kesici (Yüksek Gerilim) ', value: '7' }, 
-  { label: 'Gazlı Akım Ayırıcı (Alçak Gerilim)', value: '8' }, 
-  { label: 'Gazlı Akım Ayırıcı (Yüksek Gerilim)', value: '9' },
-  { label: 'Su Sebili', value: '10' },
+  { label: 'Buzdolabı', value: 'Buzdolabı' },
+  { label: 'Klima', value: 'Klima' },
+  { label: 'Chiller', value: 'Chiller' },
+  { label: 'VRF(Variable Refrigerant Flow)', value: 'VRF(Variable Refrigerant Flow)' }, 
+  { label: 'Yangın Baskılama Sistemi', value: 'Yangın Baskılama Sistemi' }, 
+  { label: 'Gazlı Akım Kesici (Alçak Gerilim)', value: 'Gazlı Akım Kesici (Alçak Gerilim)' }, 
+  { label: 'Gazlı Akım Kesici (Yüksek Gerilim) ', value: 'Gazlı Akım Kesici (Yüksek Gerilim)' }, 
+  { label: 'Gazlı Akım Ayırıcı (Alçak Gerilim)', value: 'Gazlı Akım Ayırıcı (Alçak Gerilim)' }, 
+  { label: 'Gazlı Akım Ayırıcı (Yüksek Gerilim)', value: 'Gazlı Akım Ayırıcı (Yüksek Gerilim)' },
+  { label: 'Su Sebili', value: 'Su Sebili' },
 ];
 const birim = [
-  { label: 'Ton', value: '1' },
-  { label: 'Kg', value: '2' },
+  { label: 'Ton', value: 'Ton' },
+  { label: 'Kg', value: 'Kg' },
 ];
 
 
 const CategoryB = () => {
   const [month, setMonth] = useState(null);
   const [source, setSource] = useState(null);
-  const [id, setId] = useState(null);
-  const [type, setType] = useState(null);
+  const [equipmentId, setEquipmentId] = useState(null);
+  const [gasType, setGasType] = useState(null);
   const [capacity, setCapacity] = useState(null);
   const [charge, setCharge] = useState(null);
   const [unit, setUnit] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   const handleSave = async () => {
-    if (month && source && id && type && capacity && charge && unit) {
+    if (month && source && equipmentId && gasType && capacity && charge && unit) {
       const userEmail = auth.currentUser.email;
       try {
         await addDoc(collection(db, "CategoryB"), {
           month,
           source,
-          id,
-          type,
+          equipmentId,
+          gasType,
           capacity,
           charge,
           unit,
@@ -140,8 +140,8 @@ const CategoryB = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Ekipman ID"
-          value={id}
-          onChangeText={(text) => setId(text)}
+          value={equipmentId}
+          onChangeText={(text) => setEquipmentId(text)}
           type="number"
           keyboardType='numeric'
         />
@@ -160,11 +160,11 @@ const CategoryB = () => {
           valueField="value"
           placeholder='Sera Gazı Cinsi Seçin'
           searchPlaceholder="Search..."
-          value={type}
+          value={gasType}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
-            setType(item.value);
+            setGasType(item.value);
             setIsFocus(false);
           }}
         />

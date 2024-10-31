@@ -7,51 +7,51 @@ import { collection, addDoc } from "firebase/firestore";
 import { auth } from '../../firebase';
 
 const tip = [
-  { label: 'Evsel Atık Su', value: '1' },
-  { label: 'Endüstriyel Atık Su', value: '2' },
-  { label: 'Tıbbi Atık', value: '3' },
-  { label: 'Kağıt/Karton', value: '4' },
-  { label: 'Ahşap', value: '5' },
-  { label: 'Metal', value: '6' },
-  { label: 'Moloz', value: '7' },
-  { label: 'Plastik', value: '8' },
-  { label: 'Elektironik', value: '9' },
-  { label: 'Evsel Atık', value: '10' },
-  { label: 'Cam', value: '11' },
-  { label: 'Atık Pil', value: '12' },
-  { label: 'Atık Yağ', value: '13' }, 
-  { label: 'Cam', value: '14' },
+  { label: 'Evsel Atık Su', value: 'Evsel Atık Su' },
+  { label: 'Endüstriyel Atık Su', value: 'Endüstriyel Atık Su' },
+  { label: 'Tıbbi Atık', value: 'Tıbbi Atık' },
+  { label: 'Kağıt/Karton', value: 'Kağıt/Karton' },
+  { label: 'Ahşap', value: 'Ahşap' },
+  { label: 'Metal', value: 'Metal' },
+  { label: 'Moloz', value: 'Moloz' },
+  { label: 'Plastik', value: 'Plastik' },
+  { label: 'Elektronik', value: 'Elektronik' },
+  { label: 'Evsel Atık', value: 'Evsel Atık' },
+  { label: 'Cam', value: 'Cam' },
+  { label: 'Atık Pil', value: 'Atık Pil' },
+  { label: 'Atık Yağ', value: 'Atık Yağ' }, 
+  { label: 'Cam', value: 'Cam' },
 ];
 const yöntem = [
-  { label: 'Biyolojik Arıtma', value: '1' },
-  { label: 'Paket Arıtmak', value: '2' },
-  { label: 'Yakarak Bertaraf', value: '3' },
-  { label: 'Sterilizasyon', value: '4' }, 
-  { label: 'Düzenli Depolama', value: '5' },
-  { label: 'Geri Dönüşüm', value: '6' },
+  { label: 'Biyolojik Arıtma', value: 'Biyolojik Arıtma' },
+  { label: 'Paket Arıtmak', value: 'Paket Arıtmak' },
+  { label: 'Yakarak Bertaraf', value: 'Yakarak Bertaraf' },
+  { label: 'Sterilizasyon', value: 'Sterilizasyon' }, 
+  { label: 'Düzenli Depolama', value: 'Düzenli Depolama' },
+  { label: 'Geri Dönüşüm', value: 'Geri Dönüşüm' },
 ];
 const birim = [
-  { label: 'Ton', value: '1' },
-  { label: 'Kg', value: '2' },
-  { label: 'M3', value: '3' },
+  { label: 'Ton', value: 'Ton' },
+  { label: 'Kg', value: 'Kg' },
+  { label: 'M3', value: 'M3' },
 ];
 
 
 const CategoryM = () => {
-  const [type, setType] = useState(null);
-  const [method, setMethod] = useState(null);
-  const [value, setValue] = useState(null);
-  const [unit, setUnit] = useState(null);
+  const [wasteType, setWasteType] = useState(null);
+  const [wasteMethod, setWasteMethod] = useState(null);
+  const [activityValue, setActivityValue] = useState(null);
+  const [activityUnit, setActivityUnit] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   const handleSave = async () => {
-    if (type && method && value && unit) {
+    if (wasteType && wasteMethod && activityValue && activityunit) {
       const userEmail = auth.currentUser.email;
       try {
         await addDoc(collection(db, "CategoryM"), {
-          type,
-          method,
-          value,
-          unit,
+          wasteType,
+          wasteMethod,
+          activityValue,
+          activityUnit,
           userEmail
         });
         alert('Bilgileriniz Kaydedildi!!');
@@ -83,11 +83,11 @@ const CategoryM = () => {
           valueField="value"
           placeholder='Atık Türü'
           searchPlaceholder="Search..."
-          value={type}
+          value={wasteType}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
-            setType(item.value);
+            setWasteType(item.value);
             setIsFocus(false);
           }}
         />
@@ -106,11 +106,11 @@ const CategoryM = () => {
           valueField="value"
           placeholder='Atık Bertaraf Yöntemi'
           searchPlaceholder="Search..."
-          value={method}
+          value={wasteMethod}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
-            setMethod(item.value);
+            setWasteMethod(item.value);
             setIsFocus(false);
           }}
         />
@@ -121,8 +121,8 @@ const CategoryM = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Değer"
-          value={value}
-          onChangeText={(text) => setValue(text)}
+          value={activityValue}
+          onChangeText={(text) => setActivityValue(text)}
           type="number"
           keyboardType="numeric"
         />
@@ -141,11 +141,11 @@ const CategoryM = () => {
           valueField="value"
           placeholder='Birim'
           searchPlaceholder="Search..."
-          value={unit}
+          value={activityUnit}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
-            setUnit(item.label);
+            setActivityUnit(item.label);
             setIsFocus(false);
           }}
           dropdownPosition='top'

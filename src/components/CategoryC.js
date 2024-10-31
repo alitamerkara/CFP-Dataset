@@ -7,61 +7,61 @@ import { collection, addDoc } from "firebase/firestore";
 import { auth } from '../../firebase';
 
 const ay = [
-  { label: 'Ocak', value: '1' },
-  { label: 'Şubat', value: '2' },
-  { label: 'Mart', value: '3' },
-  { label: 'Nisan', value: '4' },
-  { label: 'Mayıs', value: '5' },
-  { label: 'Haziran', value: '6' },
-  { label: 'Temmuz', value: '7' },
-  { label: 'Ağustos', value: '8' },
-  { label: 'Eylül', value: '9' },
-  { label: 'Ekim', value: '10' },
-  { label: 'Kasım', value: '11' },
-  { label: 'Aralık', value: '12' }, 
+  { label: 'Ocak', value: 'Ocak' },
+  { label: 'Şubat', value: 'Şubat' },
+  { label: 'Mart', value: 'Mart' },
+  { label: 'Nisan', value: 'Nisan' },
+  { label: 'Mayıs', value: 'Mayıs' },
+  { label: 'Haziran', value: 'Haziran'},
+  { label: 'Temmuz', value: 'Temmuz' },
+  { label: 'Ağustos', value: 'Ağustos' },
+  { label: 'Eylül', value: 'Eylül' },
+  { label: 'Ekim', value: 'Ekim' },
+  { label: 'Kasım', value: 'Kasım' },
+  { label: 'Aralık', value: 'Aralık' },
 ];
 const yakıt = [
-  { label: 'Doğal Gaz', value: '1' },
-  { label: 'Dizel', value: '2' },
-  { label: 'LPG', value: '3' },
-  { label: 'Asetilen', value: '4' }, 
-  { label: 'Benzin', value: '5' }, 
-  { label: 'LNG', value: '6' }, 
-  { label: 'CNG', value: '7' }, 
+  { label: 'Doğal Gaz', value: 'Doğal Gaz' },
+  { label: 'Dizel', value: 'Dizel' },
+  { label: 'LPG', value: 'LPG' },
+  { label: 'Asetilen', value: 'Asetilen' }, 
+  { label: 'Benzin', value: 'Benzin' }, 
+  { label: 'LNG', value: 'LNG' }, 
+  { label: 'CNG', value: 'CNG' }, 
 ];
 const kaynak = [
-  { label: 'On Road (Kamyon, otobüs, araba vb.)', value: '1' },
-  { label: 'Off Road (Forklift, kepçe, dozer vb.)', value: '2' },
-  { label: 'Off Road İki Zamanlı (Ot biçme makinesi vb.)', value: '3' },
-  { label: 'Off Road Dört Zamanlı (Çim biçme makinesi vb.)', value: '4' }, 
+  { label: 'On Road (Kamyon, otobüs, araba vb.)', value: 'On Road (Kamyon, otobüs, araba vb.)' },
+  { label: 'Off Road (Forklift, kepçe, dozer vb.)', value: 'Off Road (Forklift, kepçe, dozer vb.)' },
+  { label: 'Off Road İki Zamanlı (Ot biçme makinesi vb.)', value: 'Off Road İki Zamanlı (Ot biçme makinesi vb.)' },
+  { label: 'Off Road Dört Zamanlı (Çim biçme makinesi vb.)', value: 'Off Road Dört Zamanlı (Çim biçme makinesi vb.)' }, 
 ];
 const birim = [
-  { label: 'Ton', value: '1' },
-  { label: 'Lt', value: '2' },
-  { label: 'Sm3', value: '3' },
-  { label: 'M3', value: '4' }, 
-  { label: 'kWh', value: '5' }, 
+  { label: 'Ton', value: 'Ton' },
+  { label: 'Lt', value: 'Lt' },
+  { label: 'Sm3', value: 'Sm3' },
+  { label: 'M3', value: 'M3' }, 
+  { label: 'kWh', value: 'kWh' }, 
 ];
 
 
 const CategoryC = () => {
   const [month, setMonth] = useState(null);
   const [fuel, setFuel] = useState(null);
-  const [source, setSource] = useState(null);
-  const [id, setId] = useState(null);
-  const [amount, setAmount] = useState(null);
+  const [emissionSource, setEmissionSource] = useState(null);
+  const [VehicleId, setVehicleId] = useState(null);
+  const [spendingAmount, setSpendingAmount] = useState(null);
   const [unit, setUnit] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   const handleSave = async () => {
-    if (month && fuel && source && id && amount && unit) {
+    if (month && fuel && emissionSource && VehicleId && spendingAmount && unit) {
       const userEmail = auth.currentUser.email;
       try {
         await addDoc(collection(db, "CategoryC"), {
           month,
           fuel,
-          source,
-          id,
-          amount,
+          emissionSource,
+          VehicleId,
+          spendingAmount,
           unit,
           userEmail
         });
@@ -142,11 +142,11 @@ const CategoryC = () => {
           valueField="value"
           placeholder='Emisyon Kaynağı Seçin'
           searchPlaceholder="Search..."
-          value={source}
+          value={emissionSource}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
-            setSource(item.value);
+            setEmissionSource(item.value);
             setIsFocus(false);
           }}
         />
@@ -155,8 +155,8 @@ const CategoryC = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Araç ID"
-          value={id}
-          onChangeText={(text) => setId(text)}
+          value={VehicleId}
+          onChangeText={(text) => setVehicleId(text)}
           type="number"
         />
       </View>
@@ -164,8 +164,10 @@ const CategoryC = () => {
         <TextInput
           style={styles.dropdown} // Apply the dropdown style to the TextInput
           placeholder="Tüketim Miktarı"
-          value={amount}
-          onChangeText={(text) => setAmount(text)}
+          value={spendingAmount}
+          onChangeText={(text) => setSpendingAmount(text)}
+          type="number"
+          keyboardType='numeric'
         />
       </View>
       <View style={styles.container}>

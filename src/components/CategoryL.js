@@ -7,41 +7,41 @@ import { collection, addDoc } from "firebase/firestore";
 import { auth } from '../../firebase';
 
 const malzeme = [
-  { label: 'Mutfak Ekipmanları', value: '1' },
-  { label: 'Ofis Ekipmanları', value: '2' },
-  { label: 'İş Saha Ekipmanları', value: '3' },
-  { label: 'Bina ve Yapılar', value: '4' },
+  { label: 'Mutfak Ekipmanları', value: 'Mutfak Ekipmanları' },
+  { label: 'Ofis Ekipmanları', value: 'Ofis Ekipmanları' },
+  { label: 'İş Saha Ekipmanları', value: 'İş Saha Ekipmanları' },
+  { label: 'Bina ve Yapılar', value: 'Bina ve Yapılar' },
 ];
 const birim = [
-  { label: 'Ton', value: '1' },
-  { label: 'Lt', value: '2' },
-  { label: 'Sm3', value: '3' },
-  { label: 'M3', value: '4' }, 
-  { label: 'kWh', value: '5' }, 
+  { label: 'Ton', value: 'Ton' },
+  { label: 'Lt', value: 'Lt' },
+  { label: 'Sm3', value: 'Sm3' },
+  { label: 'M3', value: 'M3' }, 
+  { label: 'kWh', value: 'kWh' }, 
 ];
 
 
 const CategoryL = () => {
-  const [goods, setGoods] = useState(null);
+  const [objectType, setObjectType] = useState(null);
   const [object, setObject] = useState(null);
-  const [value, setValue] = useState(null);
-  const [unit, setUnit] = useState(null);
-  const [secondValue, setSecondValue] = useState(null);
-  const [secondUnit, setSecondUnit] = useState(null);
-  const [emission, setEmission] = useState(null);
+  const [activityValue, setActivityValue] = useState(null);
+  const [activityUnit, setActivityUnit] = useState(null);
+  const [emissionValue, setEmissionValue] = useState(null);
+  const [emissionUnit, setEmissionUnit] = useState(null);
+  const [emissionAmount, setEmissionAmount] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   const handleSave = async () => {
-    if (goods && object && value && unit && secondValue && secondUnit && emission) {
+    if (objectType && object && activityValue && activityUnit && emissionValue && emissionUnit && emissionAmount) {
       const userEmail = auth.currentUser.email;
       try {
         await addDoc(collection(db, "CategoryL"), {
-          goods,
+          objectType,
           object,
-          value,
-          unit,
-          secondValue,
-          secondUnit,
-          emission,
+          activityValue,
+          activityUnit,
+          emissionValue,
+          emissionUnit,
+          emissionAmount,
           userEmail
         });
         alert('Bilgileriniz Kaydedildi!!');
@@ -72,11 +72,11 @@ const CategoryL = () => {
           valueField="value"
           placeholder='Duran Varlık Türü'
           searchPlaceholder="Search..."
-          value={goods}
+          value={objectType}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
-            setGoods(item.value);
+            setObjectType(item.value);
             setIsFocus(false);
           }}
         />
@@ -95,8 +95,8 @@ const CategoryL = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Değer"
-          value={value}
-          onChangeText={(text) => setValue(text)}
+          value={activityValue}
+          onChangeText={(text) => setActivityValue(text)}
           type="number"
           keyboardType="numeric"
         />
@@ -115,11 +115,11 @@ const CategoryL = () => {
           valueField="value"
           placeholder='Birim'
           searchPlaceholder="Search..."
-          value={unit}
+          value={activityUnit}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
-            setUnit(item.value);
+            setActivityUnit(item.value);
             setIsFocus(false);
           }}
         />
@@ -131,8 +131,8 @@ const CategoryL = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Değer"
-          value={secondValue}
-          onChangeText={(text) => setSecondValue(text)}
+          value={emissionValue}
+          onChangeText={(text) => setEmissionValue(text)}
           type="number"
           keyboardType="numeric"
         />
@@ -151,11 +151,11 @@ const CategoryL = () => {
           valueField="value"
           placeholder='Birim'
           searchPlaceholder="Search..."
-          value={secondUnit}
+          value={emissionUnit}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
-            setSecondUnit(item.value);
+            setEmissionUnit(item.value);
             setIsFocus(false);
           }}
           dropdownPosition='top'
@@ -166,8 +166,10 @@ const CategoryL = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Emisyon Miktarları (ton CO2e)"
-          value={emission}
-          onChangeText={(text) => setEmission(text)}
+          value={emissionAmount}
+          onChangeText={(text) => setEmissionAmount(text)}
+          type="number"
+          keyboardType="numeric"
         />
       </View>
       <View style={styles.container}>

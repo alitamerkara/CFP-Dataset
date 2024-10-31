@@ -7,74 +7,74 @@ import { collection, addDoc } from "firebase/firestore";
 import { auth } from '../../firebase';
 
 const ay = [
-  { label: 'Ocak', value: '1' },
-  { label: 'Şubat', value: '2' },
-  { label: 'Mart', value: '3' },
-  { label: 'Nisan', value: '4' },
-  { label: 'Mayıs', value: '5' },
-  { label: 'Haziran', value: '6' },
-  { label: 'Temmuz', value: '7' },
-  { label: 'Ağustos', value: '8' },
-  { label: 'Eylül', value: '9' },
-  { label: 'Ekim', value: '10' },
-  { label: 'Kasım', value: '11' },
-  { label: 'Aralık', value: '12' }, 
+  { label: 'Ocak', value: 'Ocak' },
+  { label: 'Şubat', value: 'Şubat' },
+  { label: 'Mart', value: 'Mart' },
+  { label: 'Nisan', value: 'Nisan' },
+  { label: 'Mayıs', value: 'Mayıs' },
+  { label: 'Haziran', value: 'Haziran'},
+  { label: 'Temmuz', value: 'Temmuz' },
+  { label: 'Ağustos', value: 'Ağustos' },
+  { label: 'Eylül', value: 'Eylül' },
+  { label: 'Ekim', value: 'Ekim' },
+  { label: 'Kasım', value: 'Kasım' },
+  { label: 'Aralık', value: 'Aralık' },
 ];
 const yol = [
-  { label: 'Karayolu', value: '1' },
-  { label: 'Denizyolu', value: '2' },
-  { label: 'Havayolu', value: '3' },
-  { label: 'Demiryolu', value: '4' },
+  { label: 'Karayolu', value: 'Karayolu' },
+  { label: 'Denizyolu', value: 'Denizyolu' },
+  { label: 'Havayolu', value: 'Havayolu' },
+  { label: 'Demiryolu', value: 'Demiryolu' },
 ];
 const kaynak = [
-  { label: 'On Road (Kamyon, otobüs, araba vb.)', value: '1' },
-  { label: 'Off Road (Forklift, kepçe, dozer vb.)', value: '2' },
-  { label: 'Off Road İki Zamanlı (Ot biçme makinesi vb.)', value: '3' },
-  { label: 'Off Road Dört Zamanlı (Çim biçme makinesi vb.)', value: '4' }, 
+  { label: 'On Road (Kamyon, otobüs, araba vb.)', value: 'On Road (Kamyon, otobüs, araba vb.)' },
+  { label: 'Off Road (Forklift, kepçe, dozer vb.)', value: 'Off Road (Forklift, kepçe, dozer vb.)' },
+  { label: 'Off Road İki Zamanlı (Ot biçme makinesi vb.)', value: 'Off Road İki Zamanlı (Ot biçme makinesi vb.)' },
+  { label: 'Off Road Dört Zamanlı (Çim biçme makinesi vb.)', value: 'Off Road Dört Zamanlı (Çim biçme makinesi vb.)' }, 
 ];
 const birim = [
-  { label: 'Ton.km', value: '1' },
-  { label: 'Km', value: '2' }, 
+  { label: 'Ton.km', value: 'Ton.km' },
+  { label: 'Km', value: 'Km' }, 
 ];
 const yakıt = [
-  { label: 'Bilinmeyen', value: '1' },
-  { label: 'Dizel', value: '2' },
-  { label: 'LPG', value: '3' },
-  { label: 'Elektrik', value: '4' }, 
-  { label: 'Benzin', value: '5' }, 
+  { label: 'Bilinmeyen', value: 'Bilinmeyen' },
+  { label: 'Dizel', value: 'Dizel' },
+  { label: 'LPG', value: 'LPG' },
+  { label: 'Elektrik', value: 'Elektrik' }, 
+  { label: 'Benzin', value: 'Benzin' }, 
 ];
 const emisyon = [
-  { label: 'Yakıtların Yanması', value: '1' },
-  { label: 'WTT (Well To Tank)', value: '2' },
+  { label: 'Yakıtların Yanması', value: 'Yakıtların Yanması' },
+  { label: 'WTT (Well To Tank)', value: 'WTT (Well To Tank)' },
 ];
 
 
 const CategoryF = () => {
   const [month, setMonth] = useState(null);
-  const [road, setRoad] = useState(null);
+  const [roadType, setRoadType] = useState(null);
   const [vehicle, setVehicle] = useState(null);
   const [vehicleType, setVehicleType] = useState(null);
   const [fuel, setFuel] = useState(null);
-  const [emission, setEmission] = useState(null);
-  const [unit, setUnit] = useState(null);
-  const [value, setValue] = useState(null);
-  const [loadPercent, setLoadPercent] = useState(null);
   const [startLocation, setStartLocation] = useState(null);
   const [arriveLocation, setArriveLocation] = useState(null);
+  const [emission, setEmission] = useState(null);
+  const [loadPercent, setLoadPercent] = useState(null);
+  const [unit, setUnit] = useState(null);
+  const [activityValue, setActivityValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   const handleSave = async () => {
-    if (month && road && vehicle && vehicleType && fuel && emission && unit && value && loadPercent && startLocation && arriveLocation) {
+    if (month && roadType && vehicle && vehicleType && fuel && emission && unit && activityValue && loadPercent && startLocation && arriveLocation) {
       const userEmail = auth.currentUser.email;
       try {
         await addDoc(collection(db, "CategoryF"), {
           month,
-          road,
+          roadType,
           vehicle,
           vehicleType,
           fuel,
           emission,
           unit,
-          value,
+          activityValue,
           loadPercent,
           startLocation,
           arriveLocation,
@@ -132,11 +132,11 @@ const CategoryF = () => {
           valueField="value"
           placeholder='Taşımacılık Türü'
           searchPlaceholder="Search..."
-          value={road}
+          value={roadType}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
-            setRoad(item.value);
+            setRoadType(item.value);
             setIsFocus(false);
           }}
         />
@@ -239,8 +239,8 @@ const CategoryF = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Değer"
-          value={value}
-          onChangeText={(text) => setValue(text)}
+          value={activityValue}
+          onChangeText={(text) => setActivityValue(text)}
           type="number"
           keyboardType="numeric"
         />

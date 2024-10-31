@@ -3,14 +3,16 @@ import { View, Text, StyleSheet, Image, Button, ImageBackground } from 'react-na
 import { useNavigation } from '@react-navigation/native';
 import PrimaryButton from './PrimaryButton';
 
+
 const HomeScreen = () => {
 const navigation = useNavigation();
 const handlePress=()=>{
     navigation.openDrawer()
 }
     return (
+       
         <ImageBackground 
-            source={require("../../assets/bg1.avif") }
+            source={require("../../assets/bg1.png") }
             style={styles.background}
         >
             <View style={styles.container}>

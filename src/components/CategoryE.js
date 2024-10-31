@@ -7,83 +7,83 @@ import { collection, addDoc } from "firebase/firestore";
 import { auth } from '../../firebase';
 
 const ay = [
-  { label: 'Ocak', value: '1' },
-  { label: 'Şubat', value: '2' },
-  { label: 'Mart', value: '3' },
-  { label: 'Nisan', value: '4' },
-  { label: 'Mayıs', value: '5' },
-  { label: 'Haziran', value: '6' },
-  { label: 'Temmuz', value: '7' },
-  { label: 'Ağustos', value: '8' },
-  { label: 'Eylül', value: '9' },
-  { label: 'Ekim', value: '10' },
-  { label: 'Kasım', value: '11' },
-  { label: 'Aralık', value: '12' }, 
+  { label: 'Ocak', value: 'Ocak' },
+  { label: 'Şubat', value: 'Şubat' },
+  { label: 'Mart', value: 'Mart' },
+  { label: 'Nisan', value: 'Nisan' },
+  { label: 'Mayıs', value: 'Mayıs' },
+  { label: 'Haziran', value: 'Haziran'},
+  { label: 'Temmuz', value: 'Temmuz' },
+  { label: 'Ağustos', value: 'Ağustos' },
+  { label: 'Eylül', value: 'Eylül' },
+  { label: 'Ekim', value: 'Ekim' },
+  { label: 'Kasım', value: 'Kasım' },
+  { label: 'Aralık', value: 'Aralık' },
 ];
 const tip = [
-    { label: 'Isıtma', value: '1' },
-    { label: 'Soğutma', value: '2' },
-    { label: 'İklimlendirme', value: '3' },
-    { label: 'Kızgın Su', value: '4' }, 
-    { label: 'Buhar', value: '5' }, 
-    { label: 'Basınçlı Hava', value: '6' },  
+    { label: 'Isıtma', value: 'Isıtma' },
+    { label: 'Soğutma', value: 'Soğutma' },
+    { label: 'İklimlendirme', value: 'İklimlendirme' },
+    { label: 'Kızgın Su', value: 'Kızgın Su' }, 
+    { label: 'Buhar', value: 'Buhar' }, 
+    { label: 'Basınçlı Hava', value: 'Basınçlı Hava' },  
   ];
 const enerji = [
-  { label: 'Doğal Gaz', value: '1' },
-  { label: 'Dizel', value: '2' },
-  { label: 'LPG', value: '3' },
-  { label: 'Asetilen', value: '4' }, 
-  { label: 'Benzin', value: '5' }, 
-  { label: 'LNG', value: '6' }, 
-  { label: 'CNG', value: '7' },
-  { label: 'Elektrik', value: '8' }, 
+  { label: 'Doğal Gaz', value: 'Doğal Gaz' },
+  { label: 'Dizel', value: 'Dizel' },
+  { label: 'LPG', value: 'LPG' },
+  { label: 'Asetilen', value: 'Asetilen' }, 
+  { label: 'Benzin', value: 'Benzin' }, 
+  { label: 'LNG', value: 'LNG' }, 
+  { label: 'CNG', value: 'CNG' },
+  { label: 'Elektrik', value: 'Elektrik' }, 
 ];
 const birim = [
-  { label: 'kWh', value: '1' },
-  { label: 'Ton', value: '2' },
-  { label: 'm3', value: '3' }, 
+  { label: 'kWh', value: 'kWh' },
+  { label: 'Ton', value: 'Ton' },
+  { label: 'm3', value: 'm3' }, 
 ];
 const sertifika = [
-    { label: 'Evet', value: '1' },
-    { label: 'Hayır', value: '2' },
+    { label: 'Evet', value: 'Evet' },
+    { label: 'Hayır', value: 'Hayır' },
   ];
 
 
 const CategoryE = () => {
   const [country, setCountry] = useState(null);
   const [month, setMonth] = useState(null);
-  const [type, setType] = useState(null);
-  const [energy, setEnergy] = useState(null);
+  const [energyType, setEnergyType] = useState(null);
+  const [energySource, setEnergySource] = useState(null);
   const [amount, setAmount] = useState(null);
   const [unit, setUnit] = useState(null);
   const [certificate, setCertificate] = useState(null);
-  const [emission, setEmission] = useState(null);
-  const [specification, setSpecification] = useState(null);
+  const [locationElectricity, setLocationElectricity] = useState(null);
+  const [emissionFactor, setEmissionFactor] = useState(null);
+  const [manufacturerSpecification, setManufacturerSpecification] = useState(null);
   const [certificateCheck, setCertificateCheck] = useState(null);
-  const [document, setDocument] = useState(null);
-  const [year, setYear] = useState(null);
+  const [documentNumber, setDocumentNumber] = useState(null);
+  const [certificateYear, setCertificateYear] = useState(null);
   const [cost, setCost] = useState(null);
-  const [consumption, setConsumption] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   const handleSave = async () => {
-    if (country && month && type && energy && amount && unit && certificate && consumption) {
+    if (country && month && energyType && energySource && amount && unit && certificate && locationElectricity) {
       const userEmail = auth.currentUser.email;
       try {
         await addDoc(collection(db, "CategoryE"), {
           country,
           month,
-          type,
-          energy,
+          energyType,
+          energySource,
           amount,
           unit,
           certificate,
-          emission,
-          specification,
+          locationElectricity,
+          emissionFactor,
+          manufacturerSpecification,
           certificateCheck,
-          document,
-          year,
+          documentNumber,
+          certificateYear,
           cost,
-          consumption,
           userEmail
         });
         alert('Bilgileriniz Kaydedildi!!');
@@ -147,11 +147,11 @@ const CategoryE = () => {
           valueField="value"
           placeholder='Nihai Enerjinin Türü'
           searchPlaceholder="Search..."
-          value={type}
+          value={energyType}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
-            setType(item.label);
+            setEnergyType(item.label);
             setIsFocus(false);
           }}
         />
@@ -170,11 +170,11 @@ const CategoryE = () => {
           valueField="value"
           placeholder='Nihai Enerjinin Temin Edildiği Birincil Kaynak'
           searchPlaceholder="Search..."
-          value={energy}
+          value={energySource}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={item => {
-            setEnergy(item.label);
+            setEnergySource(item.label);
             setIsFocus(false);
           }}
         />
@@ -239,8 +239,8 @@ const CategoryE = () => {
         <TextInput
           style={styles.dropdown}
           placeholder=" Konum Temelli Toplam Elektrik Tüketimi"
-          value={consumption}
-          onChangeText={(text) => setConsumption(text)}
+          value={locationElectricity}
+          onChangeText={(text) => setLocationElectricity(text)}
           type="number"
           keyboardType="numeric"
         />
@@ -251,8 +251,8 @@ const CategoryE = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Emisyon Faktörü?"
-          value={emission}
-          onChangeText={(text) => setEmission(text)}
+          value={emissionFactor}
+          onChangeText={(text) => setEmissionFactor(text)}
         />
         </View>
         <View style={styles.container}>
@@ -265,8 +265,8 @@ const CategoryE = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Üreticinin Özellikleri"
-          value={specification}
-          onChangeText={(text) => setSpecification(text)}
+          value={manufacturerSpecification}
+          onChangeText={(text) => setManufacturerSpecification(text)}
         />
         </View>
         <View style={styles.container}>
@@ -281,8 +281,8 @@ const CategoryE = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="İtfa belgesi tanımlama belge numarası?"
-          value={document}
-          onChangeText={(text) => setDocument(text)}
+          value={documentNumber}
+          onChangeText={(text) => setDocumentNumber(text)}
           type="number"
           keyboardType="numeric"
         />
@@ -291,8 +291,8 @@ const CategoryE = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Sertifikaya konu elektriğin üretim yılı?"
-          value={year}
-          onChangeText={(text) => setYear(text)}
+          value={certificateYear}
+          onChangeText={(text) => setCertificateYear(text)}
           type="number"
           keyboardType="numeric"
         />

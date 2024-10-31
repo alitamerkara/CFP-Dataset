@@ -8,45 +8,45 @@ import { auth } from '../../firebase';
 
 
 const sertifika = [
-  { label: 'Evet', value: '1' },
-  { label: 'Hayır', value: '2' },
+  { label: 'Evet', value: 'Evet' },
+  { label: 'Hayır', value: 'Hayır' },
 ];
 const birim = [
-  { label: 'kWh', value: '1' },
-  { label: 'MWh', value: '2' }, 
+  { label: 'kWh', value: 'kWh' },
+  { label: 'MWh', value: 'MWh' }, 
 ];
 
 
 const CategoryD = () => {
   const [country, setCountry] = useState(null);
-  const [amount, setAmount] = useState(null);
+  const [networkAmount, setNetworkAmount] = useState(null);
   const [unit, setUnit] = useState(null);
   const [certificate, setCertificate] = useState(null);
-  const [secondAmount, setSecondAmount] = useState(null);
-  const [location, setLocation] = useState(null);
-  const [emission, setEmission] = useState(null);
-  const [specification, setSpecification] = useState(null);
+  const [renewableAmount, setRenewableAmount] = useState(null);
+  const [locationElectricity, setLocationElectricity] = useState(null);
+  const [emissionFactor, setEmissionFactor] = useState(null);
+  const [manufacturerSpecification, setManufacturerSpecification] = useState(null);
   const [certificateCheck, setCertificateCheck] = useState(null);
-  const [document, setDocument] = useState(null);
-  const [year, setYear] = useState(null);
+  const [documentNumber, setDocumentNumber] = useState(null);
+  const [certificateYear, setCertificateYear] = useState(null);
   const [cost, setCost] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   const handleSave = async () => {
-    if (country && amount && unit && certificate && secondAmount && location && emission && specification && certificateCheck && document && year && cost) {
+    if (country && networkAmount && unit && certificate && renewableAmount && locationElectricity && emissionFactor && manufacturerSpecification && certificateCheck && documentNumber && certificateYear && cost) {
       const userEmail = auth.currentUser.email;
       try {
         await addDoc(collection(db, "CategoryD"), {
           country,
-          amount,
+          networkAmount,
           unit,
           certificate,
-          secondAmount,
-          location,
-          emission,
-          specification,
+          renewableAmount,
+          locationElectricity,
+          emissionFactor,
+          manufacturerSpecification,
           certificateCheck,
-          document,
-          year,
+          documentNumber,
+          certificateYear,
           cost,
           userEmail
         });
@@ -80,8 +80,10 @@ const CategoryD = () => {
         <TextInput
           style={styles.dropdown} // Apply the dropdown style to the TextInput
           placeholder="Tüketim Miktarı"
-          value={amount}
-          onChangeText={(text) => setAmount(text)}
+          value={networkAmount}
+          onChangeText={(text) => setNetworkAmount(text)}
+          type="number"
+          keyboardType="numeric"
         />
       </View>
       <View style={styles.container}>
@@ -137,8 +139,8 @@ const CategoryD = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Miktar"
-          value={secondAmount}
-          onChangeText={(text) => setSecondAmount(text)}
+          value={renewableAmount}
+          onChangeText={(text) => setRenewableAmount(text)}
           type="number"
           keyboardType="numeric"
         />
@@ -148,8 +150,8 @@ const CategoryD = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Konum Temelli Toplam Elektrik Tüketimi"
-          value={location}
-          onChangeText={(text) => setLocation(text)}
+          value={locationElectricity}
+          onChangeText={(text) => setLocationElectricity(text)}
           type="number"
           keyboardType="numeric"
         />
@@ -160,8 +162,8 @@ const CategoryD = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Emisyon Faktörü?"
-          value={emission}
-          onChangeText={(text) => setEmission(text)}
+          value={emissionFactor}
+          onChangeText={(text) => setEmissionFactor(text)}
         />
         </View>
         <View style={styles.container}>
@@ -174,8 +176,8 @@ const CategoryD = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Üreticinin Özellikleri"
-          value={specification}
-          onChangeText={(text) => setSpecification(text)}
+          value={manufacturerSpecification}
+          onChangeText={(text) => setManufacturerSpecification(text)}
         />
         </View>
         <View style={styles.container}>
@@ -190,8 +192,8 @@ const CategoryD = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="İtfa belgesi tanımlama belge numarası?"
-          value={document}
-          onChangeText={(text) => setDocument(text)}
+          value={documentNumber}
+          onChangeText={(text) => setDocumentNumber(text)}
           type="number"
           keyboardType="numeric"
         />
@@ -200,8 +202,8 @@ const CategoryD = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Sertifikaya konu elektriğin üretim yılı?"
-          value={year}
-          onChangeText={(text) => setYear(text)}
+          value={certificateYear}
+          onChangeText={(text) => setCertificateYear(text)}
           type="number"
           keyboardType="numeric"
         />

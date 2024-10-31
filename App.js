@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { View, ActivityIndicator, Button, Alert } from 'react-native';
+import { View, ActivityIndicator, Alert, } from 'react-native';
 import HomeScreen from './src/components/HomeScreen';
 import LoginScreen from './LoginScreen';
 import { auth } from './firebase';
@@ -23,7 +23,7 @@ import CategoryO from './src/components/CategoryO';
 import CategoryP from './src/components/CategoryP';
 import CategoryR from './src/components/CategoryR';
 import CategoryS from './src/components/CategoryS';
-
+import PrimaryButton from './src/components/PrimaryButton';
 const Drawer = createDrawerNavigator();
 
 export default function App() {
@@ -79,7 +79,7 @@ export default function App() {
             component={HomeScreen}
             options={{
               headerRight: () => (
-                <Button onPress={handleSignOut} title="Çıkış Yap" color="red" />
+                <PrimaryButton onPress={handleSignOut}>Çıkış Yap</PrimaryButton>
               ),
             }}
           />

@@ -7,31 +7,31 @@ import { collection, addDoc } from "firebase/firestore";
 import { auth } from '../../firebase';
 
 const ay = [
-  { label: 'Ocak', value: '1' },
-  { label: 'Şubat', value: '2' },
-  { label: 'Mart', value: '3' },
-  { label: 'Nisan', value: '4' },
-  { label: 'Mayıs', value: '5' },
-  { label: 'Haziran', value: '6' },
-  { label: 'Temmuz', value: '7' },
-  { label: 'Ağustos', value: '8' },
-  { label: 'Eylül', value: '9' },
-  { label: 'Ekim', value: '10' },
-  { label: 'Kasım', value: '11' },
-  { label: 'Aralık', value: '12' }, 
+  { label: 'Ocak', value: 'Ocak' },
+  { label: 'Şubat', value: 'Şubat' },
+  { label: 'Mart', value: 'Mart' },
+  { label: 'Nisan', value: 'Nisan' },
+  { label: 'Mayıs', value: 'Mayıs' },
+  { label: 'Haziran', value: 'Haziran'},
+  { label: 'Temmuz', value: 'Temmuz' },
+  { label: 'Ağustos', value: 'Ağustos' },
+  { label: 'Eylül', value: 'Eylül' },
+  { label: 'Ekim', value: 'Ekim' },
+  { label: 'Kasım', value: 'Kasım' },
+  { label: 'Aralık', value: 'Aralık' },
 ];
 const satınAlım = [
-  { label: 'İnşaat Malzemeleri Satın Alımı', value: '1' },
-  { label: 'Hizmet Sözleşmesi (temizlik, güvenlik, taşıma/lojistik vb.)', value: '2' },
-  { label: 'Ofis Malzemeleri ve Ekipmanları Satın Alımı', value: '3' },
-  { label: 'Bilgisayar Yazılım ve Donanımları', value: '4' }, 
-  { label: 'İş Güvenliği ve Koruyucu Ekipmanlar', value: '5' }, 
-  { label: 'Reklam ve Pazarlama Hizmetleri', value: '6' },
-  { label: 'Eğitim ve Gelişim Hizmetleri', value: '7' }, 
-  { label: 'Bakım ve Onarım Hizmetleri', value: '8' },
-  { label: 'Risk Analizi ve Yönetimi Hizmetleri', value: '9' },
-  { label: 'Kalite Kontrol ve Test Hizmetleri', value: '10' },
-  { label: 'Soğutma/Isıtma Sistemleri', value: '11' },
+  { label: 'İnşaat Malzemeleri Satın Alımı', value: 'İnşaat Malzemeleri Satın Alımı' },
+  { label: 'Hizmet Sözleşmesi (temizlik, güvenlik, taşıma/lojistik vb.)', value: 'Hizmet Sözleşmesi (temizlik, güvenlik, taşıma/lojistik vb.)' },
+  { label: 'Ofis Malzemeleri ve Ekipmanları Satın Alımı', value: 'Ofis Malzemeleri ve Ekipmanları Satın Alımı' },
+  { label: 'Bilgisayar Yazılım ve Donanımları', value: 'Bilgisayar Yazılım ve Donanımları' }, 
+  { label: 'İş Güvenliği ve Koruyucu Ekipmanlar', value: 'İş Güvenliği ve Koruyucu Ekipmanlar' }, 
+  { label: 'Reklam ve Pazarlama Hizmetleri', value: 'Reklam ve Pazarlama Hizmetleri' },
+  { label: 'Eğitim ve Gelişim Hizmetleri', value: 'Eğitim ve Gelişim Hizmetleri' }, 
+  { label: 'Bakım ve Onarım Hizmetleri', value: 'Bakım ve Onarım Hizmetleri' },
+  { label: 'Risk Analizi ve Yönetimi Hizmetleri', value: 'Risk Analizi ve Yönetimi Hizmetleri' },
+  { label: 'Kalite Kontrol ve Test Hizmetleri', value: 'Kalite Kontrol ve Test Hizmetleri' },
+  { label: 'Soğutma/Isıtma Sistemleri', value: 'Soğutma/Isıtma Sistemleri' },
 
 ];
 
@@ -40,19 +40,19 @@ const CategoryN = () => {
   const [year, setYear] = useState(null);
   const [month, setMonth] = useState(null);
   const [buying, setBuying] = useState(null);
-  const [value, setValue] = useState(null);
+  const [buyingValue, setBuyingValue] = useState(null);
+  const [buyingUnit, setBuyingUnit] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
-  const [unit, setUnit] = useState(null);
   const handleSave = async () => {
-    if (year && month && buying && value && unit ) {
+    if (year && month && buying && buyingValue && buyingUnit ) {
       const userEmail = auth.currentUser.email;
       try {
         await addDoc(collection(db, "Satın Alınan Hizmetler Kaynaklı Emisyonlar"), {
           year,
           month,
           buying,
-          value,
-          unit,
+          buyingValue,
+          buyingUnit,
           userEmail
         });
         alert('Bilgileriniz Kaydedildi!!');
@@ -134,8 +134,8 @@ const CategoryN = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Değer"
-          value={value}
-          onChangeText={(text) => setValue(text)}
+          value={buyingValue}
+          onChangeText={(text) => setBuyingValue(text)}
           type="number"
           keyboardType="numeric"
         />
@@ -144,8 +144,8 @@ const CategoryN = () => {
         <TextInput
           style={styles.dropdown}
           placeholder="Birim"
-          value={unit}
-          onChangeText={(text) => setUnit(text)}
+          value={buyingUnit}
+          onChangeText={(text) => setBuyingUnit(text)}
           type="number"
         />
       </View> 

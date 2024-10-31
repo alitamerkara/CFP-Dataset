@@ -5,9 +5,9 @@ import PrimaryButton from './PrimaryButton';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const birim = [
-  { label: 'Ton', value: '1' },
-  { label: 'Kg', value: '2' },
-  { label: 'M3', value: '3' },
+  { label: 'Ton', value: 'Ton' },
+  { label: 'Kg', value: 'Kg' },
+  { label: 'M3', value: 'M3' },
 ];
 
 const CategoryS = () => {

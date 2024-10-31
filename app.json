@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Dataset",
+    "name": "CFP Veri Seti",
     "slug": "dataset",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -15,7 +15,7 @@
       "supportsTablet": true
     },
     "android": {
-
+      "package": "com.alitamerkara.dataset"
     },
     "web": {
       "favicon": "./assets/favicon.png"
