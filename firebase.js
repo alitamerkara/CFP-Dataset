@@ -3,7 +3,7 @@ import { initializeAuth, getReactNativePersistence } from "firebase/auth";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getFirestore } from "firebase/firestore"; 
 
-// Firebase konfigürasyonu
+
 const firebaseConfig = {
   apiKey: "AIzaSyAtwuXNq4cvHkq-I47YAC5YHAeuVh-1k7E",
   authDomain: "cfp-dataset-21f8f.firebaseapp.com",
@@ -14,7 +14,7 @@ const firebaseConfig = {
   measurementId: "G-4P7EY8N49F"
 };
 
-// Firebase'i sadece eğer başlatılmadıysa başlat
+
 let app;
 if (getApps().length === 0) {
   app = initializeApp(firebaseConfig);
